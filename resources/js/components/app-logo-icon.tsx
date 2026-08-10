@@ -6,9 +6,10 @@ export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
 
 
     return (
-        <div>
+        <div className=''>
             <img
-                className="w-44 h-44"
+                className=" border rounded-md"
+              
                 loading="lazy"
                 src={settings?.app_logo ?? undefined}
                 alt={settings?.app_name_ar}

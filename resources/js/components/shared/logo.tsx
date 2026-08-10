@@ -13,7 +13,7 @@ export default function Logo() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2.5 shrink-0"
         >
-            <div className="relative w-12 h-12 rounded-xl  flex items-center justify-center shadow-lg ">
+            <div className="relative w-12 h-12 rounded-xl  flex items-center justify-center shadow-lg rounded-full overflow-hidden ">
                 <img src={settings.app_logo || ''} alt={settings.app_name_ar} />
             </div>
             {/* <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white">
