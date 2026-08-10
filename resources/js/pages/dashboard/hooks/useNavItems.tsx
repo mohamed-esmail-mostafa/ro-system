@@ -212,7 +212,7 @@ export default function useNavItems() {
             label: t("common.sass-settings"),
             href: `/sass-update`,
             icon: SettingsIcon,
-            roles: ['super-admin']
+            // roles: ['super-admin' ,'chemist']
         }
 
     ];

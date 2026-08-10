@@ -44,13 +44,13 @@ export default function Create() {
         .test(
           "fileSize",
           "Image size must be less than 2MB",
-          (file) =>
+          (file: any) =>
             !file || file.size <= 2 * 1024 * 1024
         )
         .test(
           "fileType",
           "Only images are allowed",
-          (file) =>
+          (file: any) =>
             !file ||
             [
               "image/jpeg",

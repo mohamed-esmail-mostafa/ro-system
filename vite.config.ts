@@ -33,12 +33,15 @@ export default defineConfig({
                 'favicon.ico',
                 'favicon.svg',
                 'app-icon.png',
+                'apple-touch-icon.png',
+                'pwa-192x192.png',
+                'pwa-512x512.png',
             ],
 
             manifest: {
-                name: 'RO System',
+                name: 'RO System - Water Treatment Management',
                 short_name: 'RO System',
-                description: 'RO Water Management System',
+                description: 'RO Water Treatment Plant SaaS Management System',
 
                 start_url: '/',
                 scope: '/',
@@ -51,22 +54,29 @@ export default defineConfig({
 
                 icons: [
                     {
-                        src: '/app-icon.png',
+                        src: '/pwa-192x192.png',
                         sizes: '192x192',
                         type: 'image/png',
+                        purpose: 'any',
                     },
                     {
-                        src: '/app-icon.png',
+                        src: '/pwa-512x512.png',
                         sizes: '512x512',
                         type: 'image/png',
+                        purpose: 'any',
                     },
                     {
-                        src: '/app-icon.png',
+                        src: '/pwa-512x512.png',
                         sizes: '512x512',
                         type: 'image/png',
-                        purpose: 'any maskable',
+                        purpose: 'maskable',
                     },
                 ],
+            },
+
+            devOptions: {
+                enabled: true,
+                type: 'classic',
             },
 
             workbox: {

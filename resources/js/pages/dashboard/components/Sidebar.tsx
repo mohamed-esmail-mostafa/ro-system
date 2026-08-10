@@ -57,7 +57,8 @@ export function Sidebar({ isOpen, isCollapsed, onClose, onToggleCollapse, isMobi
 
 
 
-    const isActive = (href: string) => {
+    const isActive = (href?: string) => {
+        if (!href) return false;
         if (href === '/dashboard') return currentPath === '/dashboard' || currentPath === '/';
         return currentPath.startsWith(href);
     };

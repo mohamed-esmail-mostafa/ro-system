@@ -93,8 +93,8 @@ export default function ParameterRow({
                 /> */}
 
 
-                <Badge className={cn('text-xs', INPUT_TYPE_COLORS[param.input_type])}>
-                    {t(`ro-settings.inputTypes.${param.input_type}`)}
+                <Badge className={cn('text-xs', INPUT_TYPE_COLORS[param.input_type || 'NUMBER'])}>
+                    {t(`ro-settings.inputTypes.${param.input_type || 'NUMBER'}`)}
                 </Badge>
                 {param.unit && (
                     <span className="rounded bg-gray-200 px-1.5 py-0.5 font-mono text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300">

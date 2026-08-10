@@ -69,7 +69,7 @@ export default function ReadingCategoryCard({ category }: { category: Category }
                             {param.name}
                         </p>
                         <p className="text-base font-semibold tabular-nums text-gray-900 dark:text-white">
-                            {parseFloat(param.value).toLocaleString(undefined, {
+                            {parseFloat(param.value || '0').toLocaleString(undefined, {
                                 maximumFractionDigits: 3,
                             })}
                             <span className="ml-1 text-xs font-normal text-muted-foreground">

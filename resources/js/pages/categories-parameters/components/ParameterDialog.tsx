@@ -34,7 +34,7 @@ export function ParameterDialog({ open, onClose, category, parameter }: Paramete
     const { t } = useTranslation();
     const isEditing = Boolean(parameter);
 
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm<{
+    const { data, setData, post, put, processing, errors, reset, clearErrors, transform } = useForm<{
         name: string;
         code: string;
         unit: string;
@@ -87,15 +87,14 @@ export function ParameterDialog({ open, onClose, category, parameter }: Paramete
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const payload = {
-            ...data,
-            min_value: data.min_value !== '' ? parseFloat(data.min_value) : null,
-            max_value: data.max_value !== '' ? parseFloat(data.max_value) : null,
-        };
+        transform((formData) => ({
+            ...formData,
+            min_value: formData.min_value !== '' ? parseFloat(formData.min_value) : null,
+            max_value: formData.max_value !== '' ? parseFloat(formData.max_value) : null,
+        }));
 
         if (isEditing && parameter) {
             put(`/categories/parameters/${parameter.id}`, {
-                data: payload,
                 onSuccess: () => {
                     toast.success(t('categories_page.toastParameterUpdated'));
                     onClose();
@@ -103,7 +102,6 @@ export function ParameterDialog({ open, onClose, category, parameter }: Paramete
             });
         } else {
             post(`/categories/${category.id}/parameters`, {
-                data: payload,
                 onSuccess: () => {
                     toast.success(t('categories_page.toastParameterCreated'));
                     onClose();

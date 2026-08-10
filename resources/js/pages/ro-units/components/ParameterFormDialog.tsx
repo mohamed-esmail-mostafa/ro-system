@@ -23,21 +23,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import InputError from '@/components/input-error';
-
-interface Parameter {
-    id: number;
-    name: string;
-    code: string | null;
-    unit: string | null;
-    input_type: 'NUMBER' | 'TEXT' | 'BOOLEAN';
-    usage: 'READING' | 'DAILY_REPORT' | 'BOTH';
-    track_difference: boolean;
-    min_value: number | null;
-    max_value: number | null;
-    order: number;
-    is_required: boolean;
-    is_active: boolean;
-}
+import { Parameter } from '@/types/ro';
 
 interface ParameterFormDialogProps {
     open: boolean;
