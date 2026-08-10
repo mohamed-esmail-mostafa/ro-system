@@ -1,0 +1,243 @@
+import useComapny from '@/hooks/use-comapny';
+import useImport from '@/hooks/use-import';
+import { usePage } from '@inertiajs/react';
+import { BarChart3, Droplets, FileBarChart, LayoutDashboard, MapPin, Plus, Settings, Settings2Icon, SettingsIcon, Users } from 'lucide-react';
+import React from 'react'
+
+export interface SidebarNavItem {
+    key: string;
+    label: string;
+    href?: string;
+    icon: any;
+    roles?: string[];
+    children?: SidebarNavItem[];
+}
+export default function useNavItems() {
+    const { t } = useImport();
+    const { auth } = usePage().props as any;
+    const role = auth?.user?.role?.slug;
+    const {company}=useComapny();
+    const canAccess = (item: SidebarNavItem) => {
+
+        if (!item.roles)
+            return true;
+
+
+        return item.roles.includes(role);
+
+    };
+
+
+ 
+    const navItems: SidebarNavItem[] = [
+
+        {
+            key: 'dashboard',
+            label: t("common.dashboard"),
+            href: '/companies/dashboard',
+            icon: LayoutDashboard,
+        },
+
+
+        {
+            key: 'stations',
+            label: t("stations.title"),
+            icon: MapPin,
+            roles: ['admin' ,'operator','company-admin','chemical'],
+            children: [
+                {
+                    key: 'stations-list',
+                    label: t("stations.title"),
+                    href: '/stations',
+                    icon: MapPin,
+                },
+                {
+                    key: 'stations-users',
+                    label: t("stations.operators"),
+                    href: '/stations/operators',
+                    icon: MapPin,
+                }
+                
+            ]
+        },
+
+
+        {
+            key: 'ro',
+            label: t("ro-units.title"),
+            icon: Droplets,
+            roles: ['company-admin','operator','chemical'],
+            children: [
+
+                {
+                    key: 'ro-units',
+                    label: t("ro-units.title"),
+                    href: '/ro-units',
+                    icon: Droplets,
+                    roles: ['company-admin','operator','chemical']
+                },
+
+
+                {
+                    key: 'ro-settings',
+                    label: t("ro-units.ro-settings"),
+                    href: '/ro-units/settings',
+                    icon: Settings2Icon,
+                    roles: ['company-admin','operator','chemical']
+                }
+
+            ]
+        },
+
+
+        {
+            key: 'readings',
+            label: t("readings.title"),
+            href: '/readings',
+            icon: BarChart3,
+            roles: ['company-admin','operator','chemical'],
+             children: [
+
+                {
+                    key: 'add-new-readings',
+                    label: t("readings.create.title"),
+                    href: '/readings',
+                    icon: Plus,
+                    roles: ['company-admin','operator','chemical']
+                },
+
+            ]
+        },
+        {
+            key: 'activities',
+            label: t("activities.title"),
+            href: '/activities/',
+            icon: BarChart3,
+            roles: ['company-admin','operator','chemical'],
+             children: [
+
+                {
+                    key: 'add-new-activity',
+                    label: t("activities.create"),
+                    href: '/activities/create/page',
+                    icon: Plus,
+                    roles: ['company-admin','operator','chemical']
+                },
+                {
+                    key: 'show-activities',
+                    label: t("activities.show-activities"),
+                    href: '/activities',
+                    icon: Plus,
+                    roles: ['company-admin','operator','chemical']
+                },
+
+            ]
+        },
+
+
+        {
+            key: 'reports',
+            label: t("reports.title"),
+            href: '/reports',
+            icon: FileBarChart,
+            roles: ['company-admin','operator','chemical']
+        },
+        {
+            key: 'inventory',
+            label: t("inventory.title"),
+            href: '/inventories',
+            icon: FileBarChart,
+            roles: ['company-admin','operator','chemical'],
+              children: [
+
+                {
+                    key: 'show-inventories',
+                    label: t("inventory.show-inventories"),
+                    href: '/inventories',
+                    icon: Plus,
+                    roles: ['company-admin','operator','chemical']
+                },
+                {
+                    key: 'mif',
+                    label: t("inventory.mif"),
+                    href: '/mif',
+                    icon: Plus,
+                    roles: ['company-admin','operator','chemical']
+                },
+                {
+                    key: 'mrf',
+                    label: t("inventory.mrf"),
+                    href: '/mrf',
+                    icon: Plus,
+                    roles: ['company-admin','operator','chemical']
+                },
+
+            ]
+        },
+
+
+        {
+            key: 'users',
+            label: t("users.title"),
+            href: '/users',
+            icon: Users,
+            roles: [
+               'company-admin',
+            ]
+        },
+
+        {
+            key: 'categories',
+            label: t("common.categories-settings"),
+            href: '/categories',
+            icon: LayoutDashboard,
+        },
+
+
+        {
+            key: 'settings',
+            label: t("users.profile"),
+            href: '/users/auth/settings',
+            icon: Settings
+        },
+        {
+            key: 'company-settings',
+            label: t("companies.update-details"),
+            href: `/companies/update/details`,
+            icon: Settings,
+            roles: ['company-admin']
+        },
+        {
+            key: 'sass-settings',
+            label: t("common.sass-settings"),
+            href: `/sass-update`,
+            icon: SettingsIcon,
+            roles: ['super-admin']
+        }
+
+    ];
+
+
+    const filteredItems = navItems
+        .map(item => {
+
+            if (item.children) {
+
+                return {
+                    ...item,
+                    children: item.children.filter(canAccess)
+                };
+
+            }
+
+            return item;
+
+        })
+        .filter(canAccess)
+        .filter(item => !item.children || item.children.length);
+
+    return {
+        navItems,
+        filteredItems
+    }
+}
