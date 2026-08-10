@@ -492,7 +492,10 @@
     "logout": " تسجيل الخروج ",
     "sign-in-with-passkey": "تسجيل الدخول باستخدام مفتاح مرور",
     "authenticating": "جارٍ التحقق...",
-    "or-continue-with-email": "أو تابع باستخدام البريد الإلكتروني"
+    "or-continue-with-email": "أو تابع باستخدام البريد الإلكتروني",
+    "register_description": "املأ التفاصيل لإنشاء حساب",
+    "login_title": "تسجيل الدخول إلى حسابك",  
+    "login_description": "أدخل بريدك الإلكتروني وكلمة المرور أدناه لتسجيل الدخول"
   },
   "companies": {
     "company_logo": "شعار الشركة",

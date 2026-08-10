@@ -492,7 +492,10 @@
     "logout": "Sign Out",
     "sign-in-with-passkey": "Sign in with a passkey",
     "authenticating": "Authenticating...",
-    "or-continue-with-email": "Or continue with email"
+    "or-continue-with-email": "Or continue with email",
+    "register_description": "Fill Details To Create Account",
+    "login_title": "Log In To Your Account",
+    "login_description": "Enter your email and password below to log in"
   },
   "companies": {
     "company_logo": "Company Logo",

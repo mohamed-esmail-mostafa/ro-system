@@ -57,11 +57,11 @@ export default function ReportCard({ report, index }: { report: Report, index: n
                         <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-teal-600 dark:text-teal-400" />
                             <h3 className="text-base font-bold text-gray-900 dark:text-white">
-                                {formattedDate}
+                                {formattedDate} 
                             </h3>
                         </div>
                         <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                            {/* {report.report_date} */}
+                          
                             {report?.operator_name}
                         </p>
                     </div>
