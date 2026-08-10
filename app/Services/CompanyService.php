@@ -67,8 +67,9 @@ class CompanyService
         $company->slug = $this->generateSlug($company->name);
         $company->company_code = $this->generateCompanyCode();
         if ($request->hasFile('logo')) {
-
-            $this->cloudinaryService->deleteFromCloudinary($company->public_id);
+            if ($company->public_id) {
+                $this->cloudinaryService->deleteFromCloudinary($company->public_id);
+            }
             
             $logo = $this->cloudinaryService->uploadToCloudinary(
                 $request->file('logo'),

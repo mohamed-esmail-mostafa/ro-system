@@ -66,6 +66,7 @@ export interface Company {
     city:string;
     address:string;
     description:string;
+    logo:string;
 }
 
 

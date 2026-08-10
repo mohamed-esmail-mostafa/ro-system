@@ -14,15 +14,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
 import InputError from '@/components/input-error'
-export default function update({company}:{company:Company}) {
-  const {t}=useImport()
+export default function update({ company }: { company: Company }) {
+  const { t } = useImport()
 
 
-    const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       name: company.name || "",
       email: company.email || "",
-      phone:company.phone || "",
+      phone: company.phone || "",
       whatsapp: company.whatsapp || "",
       website: company.website || "",
       country: company.country || "",
@@ -64,7 +64,7 @@ export default function update({company}:{company:Company}) {
     }),
 
     onSubmit: (values) => {
-     
+
       router.put('/companies/update/details', values, {
         forceFormData: true,
 
@@ -85,134 +85,136 @@ export default function update({company}:{company:Company}) {
     },
   });
   return (
-   <DashboardLayout>
-   <div className="conatiner mx-auto px-5">
-     <PageTitle icon={<Settings2Icon />} title={t("companies.update-details")} />
+    <DashboardLayout>
+      <div className="conatiner mx-auto px-5">
+        <PageTitle icon={<Settings2Icon />} title={t("companies.update-details")} />
 
 
 
         <form
-            onSubmit={formik.handleSubmit}
-            className="space-y-6"
+          onSubmit={formik.handleSubmit}
+          className="space-y-6"
+        >
+
+          <div className="grid md:grid-cols-2 gap-5">
+
+            {/* Logo */}
+            <div className="md:col-span-2">
+              <div className='border flex items-center justify-center mb-2'>
+                <img src={company?.logo || "/assets/images/placeholder.webp"} className="w-fit  h-[150px] md:h-96 rounded-full" alt="" /></div>
+              <ImagePicker
+                id="logo"
+                label={t('companies.company_logo')}
+                onChange={(file) =>
+                  formik.setFieldValue("logo", file)
+                }
+                error={
+                  formik.touched.logo
+                    ? (formik.errors.logo as string)
+                    : undefined
+                }
+              />
+            </div>
+
+
+            <div>
+              <Label>{t('companies.company_name')}</Label>
+              <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
+              <InputError message={formik.errors.name} />
+            </div>
+
+
+
+
+            <div>
+              <Label>{t('companies.company_email')}</Label>
+              <Input name="email" onChange={formik.handleChange} value={formik.values.email} />
+              <InputError message={formik.errors.email} />
+            </div>
+
+
+
+
+            <div>
+              <Label>{t('companies.company_phone')}</Label>
+              <Input name="phone" onChange={formik.handleChange} value={formik.values.phone} />
+              <InputError message={formik.errors.phone} />
+            </div>
+
+            <div>
+              <Label>{t('companies.company_whatsapp')}</Label>
+              <Input name="whatsapp" onChange={formik.handleChange} value={formik.values.whatsapp} />
+              <InputError message={formik.errors.whatsapp} />
+            </div>
+
+            <div>
+              <Label>{t('companies.company_website')}</Label>
+              <Input name="website" onChange={formik.handleChange} value={formik.values.website} />
+              <InputError message={formik.errors.website} />
+            </div>
+
+
+            <div>
+              <Label>{t('companies.country')}</Label>
+              <Input name="country" onChange={formik.handleChange} value={formik.values.country} />
+              <InputError message={formik.errors.country} />
+            </div>
+
+
+            <div>
+              <Label>{t('companies.city')}</Label>
+              <Input name="city" onChange={formik.handleChange} value={formik.values.city} />
+              <InputError message={formik.errors.city} />
+            </div>
+
+
+
+          </div>
+
+
+          {/* Address */}
+          <div>
+            <Label>{t('companies.address')}</Label>
+
+            <Textarea
+              name="address"
+              value={formik.values.address}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <InputError message={formik.errors.address} />
+          </div>
+
+
+          {/* Description */}
+          <div>
+            <Label>{t('companies.description')}</Label>
+
+            <Textarea
+              rows={5}
+              name="description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+
+
+            <InputError message={formik.errors.description} />
+          </div>
+
+
+
+          <Button
+            type="submit"
+            disabled={formik.isSubmitting}
+
           >
-    
-            <div className="grid md:grid-cols-2 gap-5">
-    
-              {/* Logo */}
-              <div className="md:col-span-2">
-                <ImagePicker
-                  id="logo"
-                  label={t('companies.company_logo')}
-                  onChange={(file) =>
-                    formik.setFieldValue("logo", file)
-                  }
-                  error={
-                    formik.touched.logo
-                      ? (formik.errors.logo as string)
-                      : undefined
-                  }
-                />
-              </div>
-    
-    
-              <div>
-                <Label>{t('companies.company_name')}</Label>
-                <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
-                 <InputError message={formik.errors.name} />
-              </div>
-    
-    
-    
-    
-              <div>
-                <Label>{t('companies.company_email')}</Label>
-                <Input name="email" onChange={formik.handleChange} value={formik.values.email} />
-                 <InputError message={formik.errors.email} />
-              </div>
-    
-    
-            
-    
-               <div>
-                <Label>{t('companies.company_phone')}</Label>
-                <Input name="phone" onChange={formik.handleChange} value={formik.values.phone} />
-                 <InputError message={formik.errors.phone} />
-              </div>
-    
-               <div>
-                <Label>{t('companies.company_whatsapp')}</Label>
-                <Input name="whatsapp" onChange={formik.handleChange} value={formik.values.whatsapp} />
-                 <InputError message={formik.errors.whatsapp} />
-              </div>
-    
-               <div>
-                <Label>{t('companies.company_website')}</Label>
-                <Input name="website" onChange={formik.handleChange} value={formik.values.website} />
-                 <InputError message={formik.errors.website} />
-              </div>
-    
-    
-               <div>
-                <Label>{t('companies.country')}</Label>
-                <Input name="country" onChange={formik.handleChange} value={formik.values.country} />
-                 <InputError message={formik.errors.country} />
-              </div>
-    
-    
-               <div>
-                <Label>{t('companies.city')}</Label>
-                <Input name="city" onChange={formik.handleChange} value={formik.values.city} />
-                 <InputError message={formik.errors.city} />
-              </div>
-    
-    
-        
-            </div>
-    
-    
-            {/* Address */}
-            <div>
-              <Label>{t('companies.address')}</Label>
-    
-              <Textarea
-                name="address"
-                value={formik.values.address}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              <InputError message={formik.errors.address} />
-            </div>
-    
-    
-            {/* Description */}
-            <div>
-              <Label>{t('companies.description')}</Label>
-    
-              <Textarea
-                rows={5}
-                name="description"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-    
-             
-              <InputError message={formik.errors.description} />
-            </div>
-    
-    
-    
-            <Button
-              type="submit"
-              disabled={formik.isSubmitting}
-    
-            >
-              {t('common.create')}
-            </Button>
-    
-    
-          </form>
-   </div>
-   </DashboardLayout>
+            {t('common.create')}
+          </Button>
+
+
+        </form>
+      </div>
+    </DashboardLayout>
   )
 }

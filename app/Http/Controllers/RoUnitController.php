@@ -38,7 +38,6 @@ class RoUnitController extends Controller
         
         $company = $this->companyService->getAuthCompany();
         $stations = $company->stations()->with(['roUnits.readingCategories','roUnits.readingCategories.parameters', 'roUnits.readingParameters'])->get();
-   
         $categories = $this->readingCategoryService->getCompanyCategories($company->id);
         return Inertia::render('ro-units/ro-settings', [
             'stations'=>$stations,
@@ -65,7 +64,7 @@ class RoUnitController extends Controller
     }
 
 
-   public function ro_unit_details($id){
+   public function ro_unit_details(int $id){
     $ro_unit = RoUnit::with(['station:id,name,code', 'readingCategories.parameters'])->findOrFail($id);
     return Inertia::render('ro-units/show', ['ro_unit'=>$ro_unit]);
    }
