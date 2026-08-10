@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import ReadingCategoryCard from './reading-category-card';
-import { ChevronDown, ChevronUp, Clock } from 'lucide-react';
+import { ChevronDown, ChevronUp, Clock, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import useImport from '@/hooks/use-import';
 
@@ -21,6 +21,7 @@ interface Session {
     id: number;
     ro_unit_id: number;
     reading_at: string;
+    operator_name:string;
     categories: Category[];
 }
 
@@ -66,6 +67,10 @@ export default function SessionCard({ session, index }: { session: Session; inde
                         <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
                             <Clock className="h-3.5 w-3.5" />
                             <span>{formatDateTime(session.reading_at)}</span>
+                        </div>
+                        <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <User className="h-3.5 w-3.5" />
+                            <span>{session?.operator_name}</span>
                         </div>
                     </div>
                 </div>

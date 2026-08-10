@@ -59,7 +59,7 @@ export function RoUnitReadingForm({ unit, t }: { unit: any, t: any }) {
                 {unit.ro_unit_reading_categories?.map((category: any) => (
                     <div key={category.id} className='rounded-xl border border-gray-200 dark:border-gray-700/60 overflow-hidden bg-gray-50/50 dark:bg-gray-800/30'>
                         <div className='bg-gray-100/80 dark:bg-gray-800 px-5 py-3 border-b border-gray-200 dark:border-gray-700/60'>
-                            <h3 className='font-semibold text-gray-800 dark:text-gray-200'>{category.name}</h3>
+                            <h3 className='font-semibold text-gray-800 dark:text-gray-200'>{category?.category?.name}</h3>
                         </div>
 
                         <div className="p-5">

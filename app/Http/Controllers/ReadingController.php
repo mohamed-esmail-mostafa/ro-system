@@ -35,6 +35,7 @@ class ReadingController extends Controller
                'ro_unit_id'=>$request->ro_unit_id ,
                'user_id'=>Auth::user()->id,
                'notes'=>$request->notes,
+               'operator_name'=>Auth::user()->name,
                'reading_at'=>now()
             ]);
             $values=[];
@@ -54,14 +55,8 @@ class ReadingController extends Controller
 
 
     public function ro_unit_readings_pagee($id){
-        // $readings=ReadingSession::query()->where('ro_unit_id',$id)->with([
-        //    'readingValues.parameter'
-        // ])->latest('reading_at')->paginate(10);
-        // return $readings;
         $roUnit=RoUnit::findOrFail($id);
         $sessions= ReadingSession::where('ro_unit_id',$id)->with(['readingValues.parameter'])->latest()->paginate(10);
-
-        
         return Inertia::render("readings/ro-unit-readings",[
             'roUnit'=>$roUnit,
             'sessions'=>$sessions,
@@ -155,6 +150,7 @@ public function ro_unit_readings_page(Request $request, $id)
             'ro_unit_id' => $session->ro_unit_id,
             'reading_at' => $session->reading_at,
             'notes' => $session->notes,
+            'operator_name' => $session->operator_name,
 
             'categories' => $session->readingValues
                 ->groupBy(function ($value) {

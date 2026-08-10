@@ -81,12 +81,12 @@ export default function Navbar() {
                     <AuthMenu />
 
                     {/* CTA */}
-                    <Link
+                    {/* <Link
                         href="/companies/register/page"
                         className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/80 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 hover:scale-105 active:scale-95"
                     >
                         {t('landing.nav.cta')}
-                    </Link>
+                    </Link> */}
 
                     {/* Mobile Menu Toggle */}
                     <button
