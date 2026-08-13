@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMaterialIssuingFormRequest;
 use App\Services\MIFService;
 use App\Services\StationService;
 use Illuminate\Http\Request;
@@ -28,29 +29,29 @@ class MIFController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreMaterialIssuingFormRequest $request)
     {
-        $request->validate([
-            'form_number' => 'nullable|string|max:255',
-            'station_id' => 'required|exists:stations,id',
-            'from_location' => 'nullable|string|max:255',
-            'store_location' => 'nullable|string|max:255',
-            'from_date' => 'nullable|date',
-            'to_date' => 'nullable|date',
-            'is_transfer' => 'nullable|boolean',
-            'is_maintenance_direct_issue' => 'nullable|boolean',
-            'remarks' => 'nullable|string',
-            'issued_by' => 'nullable|exists:users,id',
-            'recieved_by' => 'nullable|exists:users,id',
-            'items' => 'required|array|min:1',
-            'items.*.inventory_item_id' => 'required|exists:inventory_items,id',
-            'items.*.quantity' => 'required|numeric|min:0.001',
-            'items.*.pm_order' => 'nullable|string|max:255',
-            'items.*.valuation_type' => 'nullable|string|max:255',
-        ]);
+        // $request->validate([
+        //     'form_number' => 'nullable|string|max:255',
+        //     'station_id' => 'required|exists:stations,id',
+        //     'from_location' => 'nullable|string|max:255',
+        //     'store_location' => 'nullable|string|max:255',
+        //     'from_date' => 'nullable|date',
+        //     'to_date' => 'nullable|date',
+        //     'is_transfer' => 'nullable|boolean',
+        //     'is_maintenance_direct_issue' => 'nullable|boolean',
+        //     'remarks' => 'nullable|string',
+        //     'issued_by' => 'nullable|exists:users,id',
+        //     'recieved_by' => 'nullable|exists:users,id',
+        //     'items' => 'required|array|min:1',
+        //     'items.*.inventory_item_id' => 'required|exists:inventory_items,id',
+        //     'items.*.quantity' => 'required|numeric|min:0.001',
+        //     'items.*.pm_order' => 'nullable|string|max:255',
+        //     'items.*.valuation_type' => 'nullable|string|max:255',
+        // ]);
 
         $this->mifService->storeMIF($request);
 
-        return redirect()->route('mif.page')->with('success', 'Material Issuing Form (MIF) created successfully.');
+        return redirect()->route('mif.page');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\StoreMaterialIssuingFormRequest;
 use App\Models\InventoryItem;
 use App\Models\InventoryTransaction;
 use App\Models\MaterialIssuingForm;
@@ -39,21 +40,22 @@ class MIFService
     /**
      * Create a new Material Issuing Form and decrease station inventory items quantity.
      */
-    public function storeMIF(Request $request): MaterialIssuingForm
+    public function storeMIF(StoreMaterialIssuingFormRequest $request): MaterialIssuingForm
     {
         return DB::transaction(function () use ($request) {
             $user = Auth::user();
             $companyId = $user?->company_id ?? 1;
-
-            // Generate unique form number if not provided
-            $formNumber = $request->form_number;
-            if (empty($formNumber)) {
-                $count = MaterialIssuingForm::count() + 1;
-                $formNumber = 'MIF-' . date('Ymd') . '-' . str_pad($count, 4, '0', STR_PAD_LEFT);
-            }
+            $stationId = (int) $request->station_id;
+          
+             $formNumber = $this->generateFormNumber(
+                $companyId,
+                $stationId
+            );
 
             // Create Material Issuing Form header
             $form = MaterialIssuingForm::create([
+                'company_id' => $companyId,
+                'station_id' => $stationId,
                 'form_number' => $formNumber,
                 'from_location' => $request->from_location,
                 'store_location' => $request->store_location,
@@ -115,5 +117,33 @@ class MIFService
 
             return $form;
         });
+    }
+
+
+
+
+     private function generateFormNumber(
+        int $companyId,
+        int $stationId
+    ): string {
+        $lastForm = MaterialIssuingForm::where('company_id', $companyId)
+            ->where('station_id', $stationId)
+            ->orderByDesc('id')
+            ->first();
+
+        $sequence = 1;
+
+        if ($lastForm) {
+            preg_match('/(\d+)$/', $lastForm->form_number, $matches);
+
+            if (isset($matches[1])) {
+                $sequence = (int) $matches[1] + 1;
+            }
+        }
+
+        return 'MIF-ST'
+            . $stationId
+            . '-'
+            . str_pad($sequence, 6, '0', STR_PAD_LEFT);
     }
 }

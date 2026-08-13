@@ -189,25 +189,25 @@ export default function InventoryTable({
 
                                                     {/* Actions */}
                                                     <td className="px-4 py-3">
-                                                        <div className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                                                        <div className="flex items-center justify-end gap-2  transition-opacity ">
                                                             <Button
                                                                 size="icon"
-                                                                variant="ghost"
+                                                                variant="secondary"
                                                                 className="h-8 w-8 text-muted-foreground hover:text-blue-600"
                                                                 onClick={() => onEdit(item)}
                                                                 title={t("inventory.editItem")}
                                                             >
-                                                                <Pencil className="h-4 w-4" />
+                                                                <Pencil className="h-4 w-4 text-primary" />
                                                             </Button>
 
                                                             <Button
                                                                 size="icon"
-                                                                variant="ghost"
+                                                                variant="destructive"
                                                                 className="h-8 w-8 text-muted-foreground hover:text-destructive"
                                                                 onClick={() => onDelete(item)}
                                                                 title={t("inventory.deleteItem")}
                                                             >
-                                                                <Trash2 className="h-4 w-4" />
+                                                                <Trash2 className="h-4 w-4 text-white" />
                                                             </Button>
                                                         </div>
                                                     </td>

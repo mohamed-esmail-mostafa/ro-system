@@ -858,7 +858,15 @@
       "createdSuccess": "Material Issuing Form (MIF) created successfully & stock updated!",
       "noForms": "No Material Issuing Forms found.",
       "noItems": "No material items added yet.",
-      "insufficientStock": "Warning: Issued quantity exceeds available stock balance."
+      "insufficientStock": "Warning: Issued quantity exceeds available stock balance.",
+      "no-stock-items":" No stock items registered in this station's inventory yet.",
+      "view-stock":"To View available inventory stock.",
+      "kpi": {
+        "totalForms": "Total MIF Forms",
+        "itemsIssued": "Items Issued",
+        "maintenanceDirect": "Maintenance Direct",
+        "transfers": "Transfers"
+      }
     },
     "mrfSection": {
       "title": "Material Receiving Form (MRF)",
