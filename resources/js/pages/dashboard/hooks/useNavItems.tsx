@@ -8,8 +8,9 @@ export interface SidebarNavItem {
     key: string;
     label: string;
     href?: string;
-    icon: any;
+    icon: React.ComponentType<{ className?: string }>;
     roles?: string[];
+    badge?: string | number;
     children?: SidebarNavItem[];
 }
 export default function useNavItems() {

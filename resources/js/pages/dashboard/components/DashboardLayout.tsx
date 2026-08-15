@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
+import useImport from '@/hooks/use-import';
+import BottomNavigation from './bottom-navigation';
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -12,9 +14,7 @@ const SIDEBAR_COLLAPSED_KEY = 'ro_sidebar_collapsed';
 const SIDEBAR_BREAKPOINT = 768; // md
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-    const { i18n } = useTranslation();
-    const isRtl = i18n.language === 'ar';
-
+    const {i18n , isRtl}=useImport()
     const [isMobile, setIsMobile] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -87,11 +87,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 {/* Scrollable page content */}
                 <main
                     id="main-content"
-                    className="flex-1 overflow-y-auto"
+                    className="flex-1 overflow-y-auto pb-20 md:pb-0"
                     tabIndex={-1}
                 >
                     {children}
                 </main>
+                <BottomNavigation />
             </div>
         </div>
     );
