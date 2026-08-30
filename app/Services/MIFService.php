@@ -7,11 +7,11 @@ use App\Models\InventoryItem;
 use App\Models\InventoryTransaction;
 use App\Models\MaterialIssuingForm;
 use App\Models\MaterialIssuingItem;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+
 
 class MIFService
 {
@@ -21,6 +21,9 @@ class MIFService
     public function getMaterialIssuingForms(): Collection
     {
         $user = Auth::user();
+        if (!$user instanceof User) {
+           abort(401);
+        }
         $stationIds = $user ? $user->stations()->pluck('stations.id') : [];
 
         return MaterialIssuingForm::query()

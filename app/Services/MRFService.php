@@ -6,6 +6,7 @@ use App\Models\InventoryItem;
 use App\Models\InventoryTransaction;
 use App\Models\MaterialReceivingForm;
 use App\Models\MaterialReceivingItem;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,18 +15,28 @@ use Illuminate\Support\Facades\DB;
 class MRFService
 {
     /**
-     * Get all Material Receiving Forms with items and workflow users.
+     * Get all Material Receiving Forms with items, stations, and workflow users.
      */
     public function getMaterialReceivingForms(): Collection
     {
+        // $user = Auth::user();
+        $user = Auth::user();
+        if (!$user instanceof User) {
+           abort(401);
+        }
+        $stationIds = $user ? $user->stations()->pluck('stations.id') : [];
+
         return MaterialReceivingForm::query()
             ->with([
-                'items',
+                'station:id,name,code',
                 'receivedBy:id,name,email',
                 'reviewedBy:id,name,email',
                 'requestedBy:id,name,email',
                 'approvedBy:id,name,email',
+                'items',
             ])
+            ->whereIn('station_id', $stationIds)
+            ->orWhereDoesntHave('items')
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -37,16 +48,18 @@ class MRFService
     {
         return DB::transaction(function () use ($request) {
             $user = Auth::user();
+            $companyId = $user?->company_id ?? 1;
+            $stationId = (int) $request->station_id;
 
-            // Generate unique form number if not provided
-            $formNumber = $request->form_number;
-            if (empty($formNumber)) {
-                $count = MaterialReceivingForm::count() + 1;
-                $formNumber = 'MRF-' . date('Ymd') . '-' . str_pad($count, 4, '0', STR_PAD_LEFT);
-            }
+            $formNumber = $this->generateFormNumber(
+                $companyId,
+                $stationId
+            );
 
             // Create Material Receiving Form Header
             $form = MaterialReceivingForm::create([
+                'company_id' => $companyId,
+                'station_id' => $stationId,
                 'form_number' => $formNumber,
                 'location' => $request->location,
                 'from_plant' => $request->from_plant,
@@ -111,5 +124,33 @@ class MRFService
 
             return $form;
         });
+    }
+
+    /**
+     * Generate sequential form number per company and station.
+     */
+    private function generateFormNumber(
+        int $companyId,
+        int $stationId
+    ): string {
+        $lastForm = MaterialReceivingForm::where('company_id', $companyId)
+            ->where('station_id', $stationId)
+            ->orderByDesc('id')
+            ->first();
+
+        $sequence = 1;
+
+        if ($lastForm) {
+            preg_match('/(\d+)$/', $lastForm->form_number, $matches);
+
+            if (isset($matches[1])) {
+                $sequence = (int) $matches[1] + 1;
+            }
+        }
+
+        return 'MRF-ST'
+            . $stationId
+            . '-'
+            . str_pad($sequence, 6, '0', STR_PAD_LEFT);
     }
 }

@@ -12,6 +12,8 @@ class MaterialReceivingForm extends Model
     use HasFactory;
 
     protected $fillable = [
+        'company_id',
+        'station_id',
         'form_number',
         'location',
         'from_plant',
@@ -36,6 +38,16 @@ class MaterialReceivingForm extends Model
         'from_date' => 'date',
         'to_date' => 'date',
     ];
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function station(): BelongsTo
+    {
+        return $this->belongsTo(Station::class);
+    }
 
     public function receivedBy(): BelongsTo
     {

@@ -14,12 +14,6 @@ import AssignCategoryPanel from './components/assign-category-panel';
 import RoSettingSidebar from './components/ro-setting-sidebar';
 
 
-interface PageProps {
-    ro_units: RoUnit[];
-    categories: Category[];
-    stations: any
-}
-
 
 export default function RoSettings({ stations, categories }: any) {
   

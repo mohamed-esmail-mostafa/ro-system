@@ -121,14 +121,14 @@ export default function ParameterRow({
                 >
                     <Edit2 className="h-3.5 w-3.5" />
                 </Button>
-                <Button
+                {/* <Button
                     size="sm"
                     variant="ghost"
                     className="h-7 w-7 p-0 text-gray-400 hover:text-red-600"
                     onClick={() => onDelete(param)}
                 >
                     <Trash2 className="h-3.5 w-3.5" />
-                </Button>
+                </Button> */}
             </div>
         </div>
     )

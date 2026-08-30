@@ -64,7 +64,7 @@ export default function CategoryCard({ category, roUnitId, onEditCategory, onDel
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
             {/* Header */}
-            {category.pivot.id}
+         
             <div className="flex items-center gap-2 px-4 py-3">
                 <button
                     type="button"

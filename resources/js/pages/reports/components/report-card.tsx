@@ -57,11 +57,11 @@ export default function ReportCard({ report, index }: { report: Report, index: n
                         <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-teal-600 dark:text-teal-400" />
                             <h3 className="text-base font-bold text-gray-900 dark:text-white">
-                                {formattedDate} 
+                                {formattedDate}
                             </h3>
                         </div>
                         <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                          
+
                             {report?.operator_name}
                         </p>
                     </div>
@@ -72,74 +72,74 @@ export default function ReportCard({ report, index }: { report: Report, index: n
 
 
 
-             <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4 dark:border-blue-900/40 dark:bg-blue-950/20">
-    <div className="flex items-center gap-4">
-        {/* Circular Progress */}
-        <div className="relative h-24 w-24 shrink-0">
-            <svg
-                className="h-24 w-24 -rotate-90"
-                viewBox="0 0 100 100"
-            >
-                {/* Background */}
-                <circle
-                    cx="50"
-                    cy="50"
-                    r={radius}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    className="text-blue-100 dark:text-blue-950"
-                />
+                <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4 dark:border-blue-900/40 dark:bg-blue-950/20">
+                    <div className="flex items-center gap-4">
+                        {/* Circular Progress */}
+                        <div className="relative h-24 w-24 shrink-0">
+                            <svg
+                                className="h-24 w-24 -rotate-90"
+                                viewBox="0 0 100 100"
+                            >
+                                {/* Background */}
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r={radius}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="8"
+                                    className="text-blue-100 dark:text-blue-950"
+                                />
 
-                {/* Progress */}
-                <circle
-                    cx="50"
-                    cy="50"
-                    r={radius}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    className="text-blue-600 dark:text-blue-400 transition-all duration-700"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={strokeDashoffset}
-                />
-            </svg>
+                                {/* Progress */}
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r={radius}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="8"
+                                    strokeLinecap="round"
+                                    className="text-blue-600 dark:text-blue-400 transition-all duration-700"
+                                    strokeDasharray={circumference}
+                                    strokeDashoffset={strokeDashoffset}
+                                />
+                            </svg>
 
-            {/* Center Value */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-lg font-bold text-gray-900 dark:text-white">
-                    {runningHours}
-                </span>
+                            {/* Center Value */}
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                <span className="text-lg font-bold text-gray-900 dark:text-white">
+                                    {runningHours}
+                                </span>
 
-                <span className="text-[10px] text-gray-500 dark:text-gray-400">
-                    / 24 {t('reports.hours')}
-                </span>
-            </div>
-        </div>
+                                <span className="text-[10px] text-gray-500 dark:text-gray-400">
+                                    / 24 {t('reports.hours')}
+                                </span>
+                            </div>
+                        </div>
 
-        {/* Information */}
-        <div>
-            <div className="flex items-center gap-2 mb-1">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-                    <Clock className="h-4 w-4" />
+                        {/* Information */}
+                        <div>
+                            <div className="flex items-center gap-2 mb-1">
+                                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                                    <Clock className="h-4 w-4" />
+                                </div>
+
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-900 dark:text-blue-300">
+                                    {t('reports.runningHours')}
+                                </h4>
+                            </div>
+
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                {t('reports.dailyOperatingTime')}
+                            </p>
+
+                            <p className="mt-1 text-xs font-medium text-blue-600 dark:text-blue-400">
+                                {runningHoursPercent.toFixed(0)}% {t('reports.dailyCapacity')}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-
-                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-900 dark:text-blue-300">
-                    {t('reports.runningHours')}
-                </h4>
-            </div>
-
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-                {t('reports.dailyOperatingTime')}
-            </p>
-
-            <p className="mt-1 text-xs font-medium text-blue-600 dark:text-blue-400">
-                {runningHoursPercent.toFixed(0)}% {t('reports.dailyCapacity')}
-            </p>
-        </div>
-    </div>
-</div>
 
 
 
@@ -261,14 +261,16 @@ export default function ReportCard({ report, index }: { report: Report, index: n
                                                         {/* Previous Value */}
                                                         <td className="py-2.5 text-center font-mono text-gray-600 dark:text-gray-300">
                                                             {param.previous_value !== null && param.previous_value !== undefined && param.previous_value !== ''
-                                                                ? param.previous_value
+                                                                ? Number(param.previous_value).toFixed(1) 
+                                                                // param.previous_value
                                                                 : '—'}
                                                         </td>
 
                                                         {/* Current Value */}
                                                         <td className="py-2.5 text-center font-mono font-bold text-gray-900 dark:text-white">
                                                             {param.current_value !== null && param.current_value !== undefined && param.current_value !== ''
-                                                                ? param.current_value
+                                                                ? Number(param.current_value).toFixed(1) 
+                                                                // param.current_value
                                                                 : '—'}
                                                         </td>
 
