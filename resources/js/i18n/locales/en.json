@@ -751,6 +751,8 @@
     "runningHours": "Running Hours",
     "dailyOperatingTime": "Daily operating time",
     "dailyCapacity": "of daily capacity",
+    "salinity-mix":"Salinity Mix",
+    "salinity-increase":"Salinity Increase",
     "validation": {
       "dateRequired": "Report date is required",
       "required": "This field is required",

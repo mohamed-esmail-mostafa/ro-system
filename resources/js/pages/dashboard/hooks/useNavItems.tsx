@@ -44,7 +44,7 @@ export default function useNavItems() {
             key: 'stations',
             label: t("stations.title"),
             icon: MapPin,
-            roles: ['admin' ,'operator','company-admin','chemical'],
+            roles: ['admin' ,'operator','company-admin','chemical','supervisior'],
             children: [
                 {
                     key: 'stations-list',
@@ -67,7 +67,7 @@ export default function useNavItems() {
             key: 'ro',
             label: t("ro-units.title"),
             icon: Droplets,
-            roles: ['company-admin','operator','chemical'],
+            roles: ['company-admin','operator','chemical','supervisior'],
             children: [
 
                 {
@@ -75,7 +75,7 @@ export default function useNavItems() {
                     label: t("ro-units.title"),
                     href: '/ro-units',
                     icon: Droplets,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
 
 
@@ -84,7 +84,7 @@ export default function useNavItems() {
                     label: t("ro-units.ro-settings"),
                     href: '/ro-units/settings',
                     icon: Settings2Icon,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 }
 
             ]
@@ -96,7 +96,7 @@ export default function useNavItems() {
             label: t("readings.title"),
             href: '/readings',
             icon: BarChart3,
-            roles: ['company-admin','operator','chemical'],
+            roles: ['company-admin','operator','chemical','supervisior'],
              children: [
 
                 {
@@ -104,7 +104,7 @@ export default function useNavItems() {
                     label: t("readings.create.title"),
                     href: '/readings',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
 
             ]
@@ -114,7 +114,7 @@ export default function useNavItems() {
             label: t("activities.title"),
             href: '/activities/',
             icon: BarChart3,
-            roles: ['company-admin','operator','chemical'],
+            roles: ['company-admin','operator','chemical','supervisior'],
              children: [
 
                 {
@@ -122,14 +122,14 @@ export default function useNavItems() {
                     label: t("activities.create"),
                     href: '/activities/create/page',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
                 {
                     key: 'show-activities',
                     label: t("activities.show-activities"),
                     href: '/activities',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
 
             ]
@@ -141,14 +141,14 @@ export default function useNavItems() {
             label: t("reports.title"),
             href: '/reports',
             icon: FileBarChart,
-            roles: ['company-admin','operator','chemical']
+            roles: ['company-admin','operator','chemical','supervisior']
         },
         {
             key: 'inventory',
             label: t("inventory.title"),
             href: '/inventories',
             icon: FileBarChart,
-            roles: ['company-admin','operator','chemical'],
+            roles: ['company-admin','operator','chemical','supervisior'],
               children: [
 
                 {
@@ -156,21 +156,21 @@ export default function useNavItems() {
                     label: t("inventory.show-inventories"),
                     href: '/inventories',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
                 {
                     key: 'mif',
                     label: t("inventory.mif"),
                     href: '/mif',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
                 {
                     key: 'mrf',
                     label: t("inventory.mrf"),
                     href: '/mrf',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical']
+                    roles: ['company-admin','operator','chemical','supervisior']
                 },
 
             ]
@@ -213,7 +213,7 @@ export default function useNavItems() {
             label: t("common.sass-settings"),
             href: `/sass-update`,
             icon: SettingsIcon,
-            // roles: ['super-admin' ,'chemist']
+            roles: ['super-admin']
         }
 
     ];

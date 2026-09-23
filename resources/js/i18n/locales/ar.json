@@ -751,6 +751,8 @@
     "runningHours": "ساعات التشغيل",
     "dailyOperatingTime": "وقت التشغيل اليومي",
     "dailyCapacity": "من السعة اليومية",
+    "salinity-mix":" نسبة الخلظ ",
+    "salinity-increase":" نسبة ارتفاع الخلظ ",
     "validation": {
       "dateRequired": "تاريخ التقرير مطلوب",
       "required": "هذا الحقل مطلوب",

@@ -99,11 +99,12 @@ const salinityStatus =
     {/* Salinity Mix */}
     <div className="rounded-xl border flex flex-col items-center justify-center border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-            Salinity Mix
+            
+            {t('reports.salinity-mix')}
         </p>
 
         <p className="text-lg font-bold text-gray-900 dark:text-white">
-            {salinityMix.toFixed(2)} - {salinityMixPercentage}%
+            {salinityMix.toFixed(2)} - {salinityMixPercentage.toFixed(2)}%
         </p>
     </div>
 
@@ -111,6 +112,7 @@ const salinityStatus =
     <div className="rounded-xl border flex flex-col items-center justify-center border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
         <p className="text-xs text-gray-500 dark:text-gray-400">
             Salinity Increase
+            {t('reports.salinity-increase')}
         </p>
 
         <p className="text-lg font-bold text-gray-900 dark:text-white">
