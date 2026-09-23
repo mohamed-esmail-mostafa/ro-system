@@ -1,182 +1,100 @@
-import React, { useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next';
-import {
-    LayoutDashboard, Package, Tag, ShoppingBag,
-    Settings, Store, ChevronLeft, ChevronRight,
-    Globe, Menu, X, ExternalLink,
-    Sun,
-} from 'lucide-react';
-import { useAppearance } from '@/hooks/use-appearance';
-import AuthMenu from '@/components/shared/auth-menu';
-import useToggleLang from '@/hooks/use-toggle-lang';
-
-interface Props {
-    children: React.ReactNode;
-    title?: string;
-}
+import React, { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Navbar } from './dashboard/Navbar';
+import BottomNavigation from './dashboard/bottom-navigation';
+import { Sidebar } from './dashboard/Sidebar';
+import useImport from '@/hooks/use-import';
 
 
 
-export default function DashboardLayout({ children, title }: Props) {
-    const { t, i18n } = useTranslation();
-    const { auth } = usePage().props as any;
-    const store = (usePage().props as any)?.store;
-    const isRtl = i18n.language === 'ar';
-    const [collapsed, setCollapsed] = useState(false);
+const SIDEBAR_COLLAPSED_KEY = 'ro_sidebar_collapsed';
+const SIDEBAR_BREAKPOINT = 768; // md
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+    const { i18n, isRtl } = useImport()
+    const [isMobile, setIsMobile] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
-    const { appearance, updateAppearance } = useAppearance()
-    const {toggleLanguage}=useToggleLang()
+    const [isCollapsed, setIsCollapsed] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === 'true';
+    });
 
-    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+    // Sync RTL direction to document
+    useEffect(() => {
+        document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+        document.documentElement.lang = i18n.language;
+    }, [isRtl, i18n.language]);
 
-  
-    const NAV_ITEMS = [
-        { key: t('vendor.sidebar.overview'), href: '/vendor/dashboard', icon: LayoutDashboard },
-        { key: t('vendor.sidebar.products'), href: '/vendor/products/page', icon: Package },
-        { key: t('vendor.sidebar.categories'), href: '/vendor/categories', icon: Tag },
-        { key: t('vendor.sidebar.orders'), href: '/store/orders', icon: ShoppingBag },
-        { key: t('vendor.sidebar.settings'), href: '/update/store/page', icon: Settings },
-    ];
+    // Responsive detection
+    useEffect(() => {
+        function checkMobile() {
+            const mobile = window.innerWidth < SIDEBAR_BREAKPOINT;
+            setIsMobile(mobile);
+            if (mobile) setMobileOpen(false);
+        }
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
-    const SidebarContent = () => (
-        <div className="flex flex-col h-full">
-            {/* Logo */}
-            <div className={`flex items-center gap-3 px-4 py-5 border-b border-orange-400/30 ${collapsed ? 'justify-center' : ''}`}>
-                <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                    <Store size={18} className="text-white" />
-                </div>
-                {!collapsed && (
-                    <div className="min-w-0">
-                        <p className="text-white font-bold text-sm truncate leading-tight">
-                            {store?.name ?? 'My Store'}
-                        </p>
-                        <p className="text-orange-200 text-xs truncate">{t('vendor.sidebar.vendor_panel')}</p>
-                    </div>
-                )}
-            </div>
+    function handleToggleCollapse() {
+        setIsCollapsed((prev) => {
+            const next = !prev;
+            localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(next));
+            return next;
+        });
+    }
 
-            {/* Navigation */}
-            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-                {NAV_ITEMS.map(({ key, href, icon: Icon }) => {
-                    const active = currentPath === href
-                        || (href !== '/vendor/dashboard' && currentPath.startsWith(href));
-                    return (
-                        <Link
-                            key={key}
-                            href={href}
-                            onClick={() => setMobileOpen(false)}
-                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-                                ${active
-                                    ? 'bg-white text-orange-600 shadow-sm'
-                                    : 'text-orange-100 hover:bg-white/10 hover:text-white'
-                                }
-                                ${collapsed ? 'justify-center' : ''}`}
-                            title={collapsed ? t(`${key}`) : undefined}
-                        >
-                            <Icon size={18} className={`shrink-0 ${active ? 'text-orange-500' : ''}`} />
-                            {!collapsed && (
-                                <span className="truncate">{t(`${key}`)}</span>
-                            )}
-                            {!collapsed && active && (
-                                <span className="ms-auto w-1.5 h-1.5 rounded-full bg-orange-500" />
-                            )}
-                        </Link>
-                    );
-                })}
-            </nav>
+    function handleMobileToggle() {
+        if (isMobile) {
+            setMobileOpen((o) => !o);
+        } else {
+            handleToggleCollapse();
+        }
+    }
 
-            {/* Footer */}
-            <div className="border-t border-orange-400/30 p-3 space-y-1">
-               
-                <button
-                    onClick={toggleLanguage}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-orange-100 hover:bg-white/10 text-sm font-medium transition-all ${collapsed ? 'justify-center' : ''}`}
-                >
-                    <Globe size={16} className="shrink-0" />
-                    {!collapsed && <span>{i18n.language === 'ar' ? 'English' : 'عربي'}</span>}
-                </button>
+    const sidebarWidth = isMobile ? 0 : isCollapsed ? 72 : 256;
 
-                <button
-                    onClick={() => appearance === 'dark' ? updateAppearance('light') : updateAppearance('dark')}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-orange-100 hover:bg-white/10 text-sm font-medium transition-all ${collapsed ? 'justify-center' : ''}`}
-                >
-                    <Sun size={16} className="shrink-0" />
-                    {!collapsed && <span>{appearance === 'dark' ? 'Light' : 'Dark'}</span>}
-                </button>
-            </div>
-        </div>
-    );
+
+
+
 
     return (
-        <div className=" overflow-y-clip bg-gray-50 dark:bg-gray-950 flex" dir={isRtl ? 'rtl' : 'ltr'}>
+        <div className="flex h-screen overflow-y-hidden  bg-gray-100  dark:bg-gray-950">
+            <Sidebar
+                isOpen={mobileOpen}
+                isCollapsed={isCollapsed}
+                onClose={() => setMobileOpen(false)}
+                onToggleCollapse={handleToggleCollapse}
+                isMobile={isMobile}
+            />
 
-            {/* Desktop sidebar */}
-            <aside
-                className={`hidden lg:flex flex-col fixed top-0 bottom-0 z-30 transition-all duration-300 ease-in-out
-                    bg-linear-to-b from-orange-500 to-orange-600 shadow-xl
-                    ${collapsed ? 'w-16' : 'w-60'}
-                    ${isRtl ? 'right-0' : 'left-0'}`}
+            {/* Main content area — shifted by sidebar width */}
+            <div
+                className={cn(
+                    'flex min-w-0 flex-1 flex-col min-h-screen overflow-y-clip transition-all duration-300 ease-in-out',
+                    !isMobile && (isRtl ? 'mr-auto' : 'ml-auto'),
+                )}
+                style={
+                    !isMobile
+                        ? isRtl
+                            ? { marginRight: sidebarWidth }
+                            : { marginLeft: sidebarWidth }
+                        : undefined
+                }
             >
-                <SidebarContent />
-                <button
-                    onClick={() => setCollapsed(c => !c)}
-                    className={`absolute top-16 -translate-y-1/2 ${isRtl ? '-left-3' : '-right-3'}
-                        w-6 h-6 rounded-full bg-white shadow-md border border-gray-100
-                        flex items-center justify-center text-orange-500
-                        hover:bg-orange-50 transition-colors z-10`}
+                <Navbar onMenuToggle={handleMobileToggle} />
+
+
+                <main
+                    id="main-content"
+                    className="flex-1 overflow-y-auto pb-20 md:pb-0 p-5"
+                    tabIndex={-1}
                 >
-                    {(collapsed && !isRtl) || (!collapsed && isRtl)
-                        ? <ChevronRight size={12} />
-                        : <ChevronLeft size={12} />}
-                </button>
-            </aside>
-
-            {/* Mobile overlay */}
-            {mobileOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-                    onClick={() => setMobileOpen(false)}
-                />
-            )}
-
-            {/* Mobile sidebar */}
-            <aside
-                className={`fixed top-0 bottom-0 z-50 w-64 lg:hidden transition-transform duration-300
-                    bg-linear-to-b from-orange-500 to-orange-600 shadow-xl
-                    ${isRtl ? 'right-0' : 'left-0'}
-                    ${mobileOpen ? 'translate-x-0' : (isRtl ? 'translate-x-full' : '-translate-x-full')}`}
-            >
-                <button
-                    onClick={() => setMobileOpen(false)}
-                    className={`absolute top-4 ${isRtl ? 'left-3' : 'right-3'} text-white`}
-                >
-                    <X size={20} />
-                </button>
-                <SidebarContent />
-            </aside>
-
-            {/* Main area */}
-            <div className={`flex-1 flex flex-col h-screen transition-all duration-300 ${collapsed ? 'lg:ms-16' : 'lg:ms-60'}`}>
-                {/* Top bar */}
-                <header className="sticky top-0 z-20 h-14 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 shadow-xs flex items-center px-4 gap-3">
-                    <button
-                        className="lg:hidden p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        onClick={() => setMobileOpen(true)}
-                    >
-                        <Menu size={20} />
-                    </button>
-                    <div className="flex-1">
-                        <h1 className="text-sm font-semibold text-gray-800 dark:text-white">{title}</h1>
-                    </div>
-                    
-                    <AuthMenu />
-                </header>
-
-                <main className="flex-1 p-5 md:p-6 overflow-y-auto">
                     {children}
                 </main>
+                <BottomNavigation />
             </div>
+
         </div>
     );
 }

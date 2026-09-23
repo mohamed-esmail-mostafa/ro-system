@@ -111,7 +111,7 @@ const salinityStatus =
     {/* Salinity Increase */}
     <div className="rounded-xl border flex flex-col items-center justify-center border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-            Salinity Increase
+           
             {t('reports.salinity-increase')}
         </p>
 

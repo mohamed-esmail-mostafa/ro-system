@@ -3,11 +3,14 @@ import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { usePage } from '@inertiajs/react';
 import { MapPin, Plus } from 'lucide-react';
-import { DashboardLayout } from '../dashboard/components/DashboardLayout';
+// import { DashboardLayout } from '../dashboard/components/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { StationTable } from './components/StationTable';
 import { StationFormDialog } from './components/StationFormDialog';
 import useComapny from '@/hooks/use-comapny';
+import DashboardLayout from '@/layouts/dashboard-layout';
+import PageHeader from '@/components/shared/page-header';
+import BackBtn from '@/components/shared/back-btn';
 
 interface Station {
     id: number;
@@ -36,30 +39,21 @@ export default function Stations() {
             <Head title={`${t('stations.title')} — AquaRO`} />
 
             <div className="space-y-6 p-6">
-                {/* Page Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 shadow-md shadow-blue-200 dark:shadow-blue-900/30">
-                            <MapPin className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                                {t('stations.title')}
-                            </h1>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {company?.name} &mdash; {t('stations.subtitle')}
-                            </p>
-                        </div>
+            
+                <PageHeader
+                    icon={<MapPin className="h-5 w-5 text-white" />}
+                    title={t('stations.title')} subtitle={`${company?.name} - ${t('stations.subtitle')}`}>
+                    <div className='flex items-center gap-2'>
+                        <Button
+                            onClick={() => setCreateOpen(true)}
+                            className="flex items-center gap-2 shadow-sm"
+                        >
+                            <Plus className="h-4 w-4" />
+                            {t('stations.create')}
+                        </Button>
+                        {/* <BackBtn /> */}
                     </div>
-
-                    <Button
-                        onClick={() => setCreateOpen(true)}
-                        className="flex items-center gap-2 shadow-sm"
-                    >
-                        <Plus className="h-4 w-4" />
-                        {t('stations.create')}
-                    </Button>
-                </div>
+                </PageHeader>
 
                 {/* Stats Row */}
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
