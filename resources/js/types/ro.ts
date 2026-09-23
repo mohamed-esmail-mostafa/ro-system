@@ -17,6 +17,7 @@ export interface Parameter {
 export interface Station {
     id: string;
     name: string;
+    code:string;
     companyId: string;
     location: string;
     unitCount: number;
@@ -38,6 +39,9 @@ export interface RoUnit {
     id: number;
     name: string;
     code: string;
+    station_id: number;
+    is_active: boolean;
+    station?: { id: number; name: string; code: string };
     reading_categories: Category[];
     readingParameters: Parameter[];
     reading_parameters: Parameter[];

@@ -101,6 +101,14 @@ export default function StationCard({ station }: { station: Station }) {
                                 >
                                     {t("reports.dailyReports")}
                                 </Link>
+
+
+                                  <Link
+                                    href={`/kpi/ro-unit/${unit.id}`}
+                                    className="rounded-lg bg-emerald-600 px-3 py-2 text-center text-sm font-medium text-white transition hover:bg-emerald-700"
+                                >
+                                    {t("kpi.title")}
+                                </Link>
                             </div>
                         </div>
                     ))

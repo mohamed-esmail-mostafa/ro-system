@@ -10,7 +10,7 @@ import {
 
 import { DashboardLayout } from "./components/DashboardLayout";
 import useImport from "@/hooks/use-import";
-import PageTitle from "@/components/shared/page-title";
+import PageTitle from "@/components/shared/page-header";
 import StationCard from "./components/station-card";
 
 export default function Dashboard({
@@ -30,7 +30,7 @@ export default function Dashboard({
           title={t("dashboard.all-stations")}
           subtitle={t("dashboard.manage-dashboard")}
         />
-       
+
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {stations.map((station) => (

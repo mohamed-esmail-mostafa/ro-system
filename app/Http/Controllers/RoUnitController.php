@@ -22,11 +22,11 @@ class RoUnitController extends Controller
 
     public function ro_units_page()
     {
-        $stations = $this->stationService->getCompanyStations();  
+        $stations = $this->stationService->getCompanyStations();
         $roUnits = RoUnit::with('station:id,name,code')
             ->whereIn('station_id', $stations->pluck('id'))
             ->orderBy('created_at', 'desc')
-            ->get();          
+            ->get();
         return Inertia::render('ro-units/index', [
             'ro_units' => $roUnits,
             'stations' => $stations,
@@ -35,12 +35,12 @@ class RoUnitController extends Controller
 
     public function ro_units_settings_page()
     {
-        
+
         $company = $this->companyService->getAuthCompany();
-        $stations = $company->stations()->with(['roUnits.readingCategories','roUnits.readingCategories.parameters', 'roUnits.readingParameters'])->get();
+        $stations = $company->stations()->with(['roUnits.readingCategories', 'roUnits.readingCategories.parameters', 'roUnits.readingParameters'])->get();
         $categories = $this->readingCategoryService->getCompanyCategories($company->id);
         return Inertia::render('ro-units/ro-settings', [
-            'stations'=>$stations,
+            'stations' => $stations,
             'categories' => $categories,
         ]);
     }
@@ -64,8 +64,16 @@ class RoUnitController extends Controller
     }
 
 
-   public function ro_unit_details(int $id){
-    $ro_unit = RoUnit::with(['station:id,name,code', 'readingCategories.parameters'])->findOrFail($id);
-    return Inertia::render('ro-units/show', ['ro_unit'=>$ro_unit]);
-   }
+    public function ro_unit_details(int $id)
+    {
+        $ro_unit = RoUnit::with(['station:id,name,code', 'readingCategories.parameters'])->findOrFail($id);
+        return Inertia::render('ro-units/show', ['ro_unit' => $ro_unit]);
+    }
+
+
+    public function create_ro_unit_page(){
+        return Inertia::render("ro-units/create",[
+            'stations' => $this->stationService->getCompanyStations()
+        ]);
+    }
 }

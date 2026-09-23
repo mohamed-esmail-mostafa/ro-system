@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import useImport from '@/hooks/use-import';
 import { Report } from '@/types/ro';
 import { Calendar, ChevronDown, ChevronRight, ChevronUp, ClipboardList, Clock, Layers, Lightbulb } from 'lucide-react';
+import { getReportParameter } from '@/helper/report-parameter';
+import { formatDate } from '@/helper/date-formatter';
 
 export default function ReportCard({ report, index }: { report: Report, index: number }) {
     const { t } = useImport();
@@ -11,13 +13,35 @@ export default function ReportCard({ report, index }: { report: Report, index: n
     const categories = report.categories || [];
     const totalParams = categories.reduce((sum, cat) => sum + (cat.parameters?.length || 0), 0);
 
-    const formattedDate = new Date(report.report_date).toLocaleDateString(undefined, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-    });
 
+
+
+    const salinityPxOut = getReportParameter(report, 'PX_FEED_CONDUCTIVITY');
+    const salinityMembraneOut = getReportParameter(report, 'MEMBRANE_REJECT_CONDUCTIVITY');
+    const salinityFeedIn = getReportParameter(report, 'CF_FEED_CONDUCTIVITY');
+
+    const pxOut = Number(salinityPxOut?.current_value ?? 0);
+const membraneOut = Number(salinityMembraneOut?.current_value ?? 0);
+const feedIn = Number(salinityFeedIn?.current_value ?? 0);
+    
+  
+
+const salinityMix =
+    membraneOut !== feedIn
+        ? (pxOut - feedIn) / (membraneOut - feedIn)
+        : 0;
+
+// Salinity increase percentage
+const salinityIncrease =
+    feedIn !== 0
+        ? ((pxOut - feedIn) / feedIn) * 100
+        : 0;
+
+// Status based on Salinity Mix
+const salinityStatus =
+    salinityMix >= 1 && salinityMix <= 3
+        ? 'good'
+        : 'danger';
 
 
     const runningHoursParam = report.categories
@@ -42,7 +66,7 @@ export default function ReportCard({ report, index }: { report: Report, index: n
 
 
     return (
-        <Card className="overflow-hidden border-gray-200 bg-white shadow-sm transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+        <Card className="overflow-hidden border-gray-200 bg-white shadow-sm transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900 p-0">
             {/* Header Accordion Bar */}
             <div
                 onClick={() => setExpanded((v) => !v)}
@@ -57,7 +81,8 @@ export default function ReportCard({ report, index }: { report: Report, index: n
                         <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-teal-600 dark:text-teal-400" />
                             <h3 className="text-base font-bold text-gray-900 dark:text-white">
-                                {formattedDate}
+                                {/* {formattedDate} */}
+                                {formatDate(report.report_date)}
                             </h3>
                         </div>
                         <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
@@ -69,7 +94,40 @@ export default function ReportCard({ report, index }: { report: Report, index: n
 
 
 
+<div className="flex flex-wrap items-center gap-3">
+    {/* Salinity Mix */}
+    <div className="rounded-xl border flex flex-col items-center justify-center border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+            Salinity Mix
+        </p>
 
+        <p className="text-lg font-bold text-gray-900 dark:text-white">
+            {salinityMix.toFixed(2)}
+        </p>
+    </div>
+
+    {/* Salinity Increase */}
+    <div className="rounded-xl border flex flex-col items-center justify-center border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+            Salinity Increase
+        </p>
+
+        <p className="text-lg font-bold text-gray-900 dark:text-white">
+            {salinityIncrease.toFixed(1)}%
+        </p>
+    </div>
+
+    {/* Status */}
+    <Badge
+        className={
+            salinityStatus === 'good'
+                ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300'
+                : 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300'
+        }
+    >
+        {salinityStatus === 'good' ? t('common.good') : t('common.danger')}
+    </Badge>
+</div>
 
 
                 <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4 dark:border-blue-900/40 dark:bg-blue-950/20">
@@ -261,7 +319,7 @@ export default function ReportCard({ report, index }: { report: Report, index: n
                                                         {/* Previous Value */}
                                                         <td className="py-2.5 text-center font-mono text-gray-600 dark:text-gray-300">
                                                             {param.previous_value !== null && param.previous_value !== undefined && param.previous_value !== ''
-                                                                ? Number(param.previous_value).toFixed(1) 
+                                                                ? Number(param.previous_value).toFixed(1)
                                                                 // param.previous_value
                                                                 : '—'}
                                                         </td>
@@ -269,7 +327,7 @@ export default function ReportCard({ report, index }: { report: Report, index: n
                                                         {/* Current Value */}
                                                         <td className="py-2.5 text-center font-mono font-bold text-gray-900 dark:text-white">
                                                             {param.current_value !== null && param.current_value !== undefined && param.current_value !== ''
-                                                                ? Number(param.current_value).toFixed(1) 
+                                                                ? Number(param.current_value).toFixed(1)
                                                                 // param.current_value
                                                                 : '—'}
                                                         </td>

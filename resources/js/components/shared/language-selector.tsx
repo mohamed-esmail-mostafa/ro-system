@@ -1,40 +1,25 @@
 
-import {
-    DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator
-} from '@/components/ui/dropdown-menu';
-import { ChevronDown, Check } from 'lucide-react'
-import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
+import {  Globe2 } from 'lucide-react'
+
+import useToggleLang from '@/hooks/use-toggle-lang';
+import useImport from '@/hooks/use-import';
 
 export default function LanguageSelector() {
-    const { t, i18n } = useTranslation()
-    const LANGUAGES = [
-        { code: 'en', label: 'English' },
-        { code: 'ar', label: 'العربية' },
-    ];
-    const currentLang = LANGUAGES.find(l => l.code === i18n.language) ?? LANGUAGES[0];
-
-    const switchLanguage = (code: string) => {
-        i18n.changeLanguage(code);
-        document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
-        document.documentElement.lang = code;
-    };
+    const { t, isRtl } = useImport()
+    const { toggleLanguage } = useToggleLang()
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 hover:text-primary transition-colors outline-none">
-              <Globe className="h-4.5 w-4.5" />  {currentLang.code} <ChevronDown size={11} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="min-w-24">
-                {LANGUAGES.map(l => (
-                    <DropdownMenuItem
-                        key={l.code}
-                        onClick={() => switchLanguage(l.code)}
-                        className={`text-xs justify-between gap-2 ${i18n.language === l.code ? 'text-primary font-semibold' : ''}`}
-                    >
-                        {l.label} {i18n.language === l.code && <Check size={11} />}
-                    </DropdownMenuItem>
-                ))}
-            </DropdownMenuContent>
-        </DropdownMenu>
+
+        <button
+            type="button"
+            onClick={toggleLanguage}
+            className="flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3.5 py-2 text-xs font-bold text-foreground shadow-xs transition hover:bg-accent hover:text-primary"
+            title={isRtl ? 'Switch to English' : 'التحويل إلى العربية'}
+        >
+            <Globe2 size={14} className="text-primary" />
+
+            <span>
+                {isRtl ? 'EN' : 'العربية'}
+            </span>
+        </button>
     )
 }

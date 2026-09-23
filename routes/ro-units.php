@@ -9,6 +9,7 @@ Route::prefix('ro-units')->group(function () {
         Route::get('/', 'ro_units_page')->name('ro_units.page')->middleware("auth");
         Route::get('/unit-details/{id}', 'ro_unit_details')->name('ro_units.details')->middleware("auth");
         Route::get('/settings', 'ro_units_settings_page')->name('ro_units.settings.page')->middleware("auth");
+        Route::get("/create/ro/unit/page","create_ro_unit_page")->middleware("auth");
         Route::post('/store', 'store')->name('ro_units.store')->middleware("auth");
         Route::put('/{roUnit}', 'update')->name('ro_units.update')->middleware("auth");
         Route::delete('/{roUnit}', 'destroy')->name('ro_units.destroy')->middleware("auth");

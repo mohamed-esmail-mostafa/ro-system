@@ -4,7 +4,7 @@ import useImport from '@/hooks/use-import'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DailyReportForm } from './components/daily-report-form'
 import NoStationFound from './components/no-station-found'
-import PageTitle from '@/components/shared/page-title'
+import PageTitle from '@/components/shared/page-header'
 import { Head } from '@inertiajs/react'
 
 export default function DailyReports({ stations }: { stations: Array<any> }) {
@@ -13,13 +13,13 @@ export default function DailyReports({ stations }: { stations: Array<any> }) {
     return (
         <DashboardLayout>
             <div className="container mx-auto p-4 sm:p-6 lg:p-10">
-                
-             <Head title={t('reports.create-report')} />
-                <PageTitle 
-                  icon ={<FileBarChart2 className="h-6 w-6 text-white" />} 
-                  title={t('reports.create-report')}
-                  subtitle={t('reports.create-report-subtitle')}
-                  />
+
+                <Head title={t('reports.create-report')} />
+                <PageTitle
+                    icon={<FileBarChart2 className="h-6 w-6 text-white" />}
+                    title={t('reports.create-report')}
+                    subtitle={t('reports.create-report-subtitle')}
+                />
 
                 {/* Stations Tabs */}
                 {stations && stations.length > 0 ? (
@@ -44,7 +44,7 @@ export default function DailyReports({ stations }: { stations: Array<any> }) {
                             >
                                 {station.ro_units && station.ro_units.length > 0 ? (
                                     station.ro_units.map((unit: any) => (
-                                        <DailyReportForm key={unit.id} unit={unit}  />
+                                        <DailyReportForm key={unit.id} unit={unit} />
                                     ))
                                 ) : (
                                     <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700">
@@ -58,7 +58,7 @@ export default function DailyReports({ stations }: { stations: Array<any> }) {
                         ))}
                     </Tabs>
                 ) : (
-                  <NoStationFound />
+                    <NoStationFound />
                 )}
             </div>
         </DashboardLayout>

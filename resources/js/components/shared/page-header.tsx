@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react'
 
 interface PageTitleProps {
-  title: string
+  title?: string
   subtitle?: string
   icon?: ReactNode
   children?: ReactNode
 }
 
-export default function PageTitle({
+export default function PageHeader({
   title,
   subtitle,
   icon,

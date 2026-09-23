@@ -10,7 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import PWA from './components/shared/PWA';
 import InstallPWA from './components/shared/InstallPWA';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'NAQAA';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),

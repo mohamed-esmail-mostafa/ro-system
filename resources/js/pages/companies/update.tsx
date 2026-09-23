@@ -1,6 +1,6 @@
 import React from 'react'
 import { DashboardLayout } from '../dashboard/components/DashboardLayout'
-import PageTitle from '@/components/shared/page-title'
+import PageTitle from '@/components/shared/page-header'
 import useImport from '@/hooks/use-import'
 import { Settings2Icon } from 'lucide-react'
 import { Company } from '@/types/ro'

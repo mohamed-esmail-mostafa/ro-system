@@ -60,14 +60,14 @@ export default function ShowReports({ roUnit, reports, filters }: ShowReportsPro
                     total={total} />
 
 
-                <DateFilterReports 
-                   dateFrom={dateFrom} 
-                   dateTo={dateTo} 
-                   setDateFrom={setDateFrom} 
-                   setDateTo={setDateTo} 
-                   applyFilter={applyFilter} 
-                   hasFilters={hasFilters} 
-                   clearFilter={clearFilter} 
+                <DateFilterReports
+                    dateFrom={dateFrom}
+                    dateTo={dateTo}
+                    setDateFrom={setDateFrom}
+                    setDateTo={setDateTo}
+                    applyFilter={applyFilter}
+                    hasFilters={hasFilters}
+                    clearFilter={clearFilter}
                 />
 
                 {/* Daily Reports List */}
@@ -75,21 +75,21 @@ export default function ShowReports({ roUnit, reports, filters }: ShowReportsPro
                     <NoReports />
                 ) : (
                     <div className="space-y-5">
-                        {data.map((report:Report, index:number) => (
+                        {data.map((report: Report, index: number) => (
                             <ReportCard key={report.id} report={report} index={index} />
                         ))}
                     </div>
                 )}
 
-                
-                <ReportsPagination 
-                   data={data} 
-                   total={total} 
-                   from={from} 
-                   to={to} 
-                   links={links} 
-                   last_page={last_page}
-                    />
+
+                <ReportsPagination
+                    data={data}
+                    total={total}
+                    from={from}
+                    to={to}
+                    links={links}
+                    last_page={last_page}
+                />
             </div>
         </DashboardLayout>
     );

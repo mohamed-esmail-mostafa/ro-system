@@ -16,7 +16,7 @@ import { DashboardLayout } from '../dashboard/components/DashboardLayout';
 import CreateMIFDialog from './components/create-mif-dialog';
 import MIFFormCard from './components/mif-form-card';
 import type { IndexProps } from './types';
-import PageTitle from '@/components/shared/page-title';
+import PageTitle from '@/components/shared/page-header';
 import KPI from './components/kpi';
 import SearchBar from './components/search-bar';
 
@@ -75,7 +75,7 @@ export default function MIFPage({ stations = [], forms = [], users = [] }: Index
                 </PageTitle>
 
                 {/* KPI Metrics */}
-             
+
                 <KPI
                     totalFormsCount={totalFormsCount}
                     totalItemsIssued={totalItemsIssued}

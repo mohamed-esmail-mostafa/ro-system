@@ -466,7 +466,10 @@
     "coming_soon": "Coming Soon",
     "something_great_is_coming": "Something Great Is Coming",
     "coming_soon_description": "We're working hard to bring you this feature. It will be available soon.",
-    "stay_tuned": "Stay tuned for updates"
+    "stay_tuned": "Stay tuned for updates",
+    "back":"Go Back",
+    "danger":"Danger",
+    "good":"Good"
   },
   "auth": {
     "register": "Register",
@@ -1044,5 +1047,8 @@
     "close": "Close",
     "ios_title": "Install on iOS",
     "ios_instruction": "To install this app on your iPhone/iPad, tap the Share icon and select \"Add to Home Screen\"."
+  },
+  "kpi":{
+    "title":"KPI"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, usePage, Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { Droplets, Plus } from 'lucide-react';
 import { DashboardLayout } from '../dashboard/components/DashboardLayout';
@@ -7,25 +7,28 @@ import { Button } from '@/components/ui/button';
 import { RoUnitTable } from './components/RoUnitTable';
 import { RoUnitFormDialog } from './components/RoUnitFormDialog';
 import useComapny from '@/hooks/use-comapny';
+import PageHeader from '@/components/shared/page-header';
+import { Station ,RoUnit } from '@/types/ro';
 
-interface Station {
-    id: number;
-    name: string;
-    code: string;
-}
 
-interface RoUnit {
-    id: number;
-    station_id: number;
-    name: string;
-    code: string | null;
-    capacity: number | null;
-    description: string | null;
-    serial_number: string | null;
-    manufacturer: string | null;
-    is_active: boolean;
-    station?: { id: number; name: string; code: string };
-}
+// interface Station {
+//     id: number;
+//     name: string;
+//     code: string;
+// }
+
+// interface RoUnit {
+//     id: number;
+//     station_id: number;
+//     name: string;
+//     code: string | null;
+//     capacity: number | null;
+//     description: string | null;
+//     serial_number: string | null;
+//     manufacturer: string | null;
+//     is_active: boolean;
+//     station?: { id: number; name: string; code: string };
+// }
 
 interface PageProps {
     ro_units: RoUnit[];
@@ -43,30 +46,18 @@ export default function RoUnitsPage() {
             <Head title={`${t('ro-units.title')} — AquaRO`} />
 
             <div className="space-y-6 p-6">
-                {/* Page Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-600 shadow-md shadow-cyan-200 dark:shadow-cyan-900/30">
-                            <Droplets className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                                {t('ro-units.title')}
-                            </h1>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {company?.name} &mdash; {t('ro-units.subtitle')}
-                            </p>
-                        </div>
-                    </div>
+               
+                
+                <PageHeader
+                    icon={<Droplets className="h-5 w-5 text-white" />}
+                    title={t('ro-units.title')}
+                    subtitle={` ${company?.name} - ${t('ro-units.subtitle')} `}
 
-                    <Button
-                        onClick={() => setCreateOpen(true)}
-                        className="flex items-center gap-2 shadow-sm"
-                    >
-                        <Plus className="h-4 w-4" />
-                        {t('ro-units.create')}
+                >
+                    <Button>
+                        <Link href="/ro-units/create/ro/unit/page">{t('ro-units.create')}</Link>
                     </Button>
-                </div>
+                </PageHeader>
 
                 {/* Stats Row */}
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
