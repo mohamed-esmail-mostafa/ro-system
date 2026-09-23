@@ -21,8 +21,8 @@ export default function ReportCard({ report, index }: { report: Report, index: n
     const salinityFeedIn = getReportParameter(report, 'CF_FEED_CONDUCTIVITY');
 
     const pxOut = Number(salinityPxOut?.current_value ?? 0);
-const membraneOut = Number(salinityMembraneOut?.current_value ?? 0);
-const feedIn = Number(salinityFeedIn?.current_value ?? 0);
+    const membraneOut = Number(salinityMembraneOut?.current_value ?? 0);
+    const feedIn = Number(salinityFeedIn?.current_value ?? 0);
     
   
 
@@ -38,8 +38,9 @@ const salinityIncrease =
         : 0;
 
 // Status based on Salinity Mix
+const salinityMixPercentage = salinityMix * 100
 const salinityStatus =
-    salinityMix >= 1 && salinityMix <= 3
+    salinityMixPercentage >= 1 && salinityMix <= 3
         ? 'good'
         : 'danger';
 
@@ -102,7 +103,7 @@ const salinityStatus =
         </p>
 
         <p className="text-lg font-bold text-gray-900 dark:text-white">
-            {salinityMix.toFixed(2)}
+            {salinityMix.toFixed(2)} - {salinityMixPercentage}%
         </p>
     </div>
 
