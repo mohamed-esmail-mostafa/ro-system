@@ -17,18 +17,10 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import InputError from '@/components/input-error';
 import useImport from '@/hooks/use-import';
+import { Station } from '@/types/ro';
 
 
-interface Station {
-    id: number;
-    name: string;
-    code: string;
-    phone: string | null;
-    city: string | null;
-    country: string | null;
-    address: string | null;
-    is_active: boolean;
-}
+
 
 interface StationFormDialogProps {
     open: boolean;

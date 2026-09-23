@@ -87,7 +87,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 <main
                     id="main-content"
-                    className="flex-1 overflow-y-auto pb-20 md:pb-0 p-5"
+                    className="flex-1 overflow-y-auto pb-20 md:pb-0 px-2 py-3"
                     tabIndex={-1}
                 >
                     {children}

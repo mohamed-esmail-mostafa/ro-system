@@ -18,12 +18,16 @@ export interface Station {
     id: string;
     name: string;
     code:string;
+    phone: string | null;
     companyId: string;
+    city: string | null;
+    country: string | null;
     location: string;
     unitCount: number;
     address:string;
     is_active:boolean;
     ro_units:RoUnit[] 
+    ro_units_count?: number;
 }
 
 export interface Category {

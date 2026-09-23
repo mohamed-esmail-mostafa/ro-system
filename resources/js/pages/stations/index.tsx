@@ -1,36 +1,18 @@
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next';
-import { usePage } from '@inertiajs/react';
 import { MapPin, Plus } from 'lucide-react';
-// import { DashboardLayout } from '../dashboard/components/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { StationTable } from './components/StationTable';
 import { StationFormDialog } from './components/StationFormDialog';
 import useComapny from '@/hooks/use-comapny';
 import DashboardLayout from '@/layouts/dashboard-layout';
 import PageHeader from '@/components/shared/page-header';
-import BackBtn from '@/components/shared/back-btn';
 
-interface Station {
-    id: number;
-    name: string;
-    code: string;
-    phone: string | null;
-    city: string | null;
-    country: string | null;
-    address: string | null;
-    is_active: boolean;
-    ro_units_count?: number;
-}
+import { Station } from '@/types/ro';
+import useImport from '@/hooks/use-import';
 
-interface PageProps {
-    stations: Station[];
-}
-
-export default function Stations() {
-    const { t } = useTranslation();
-    const { stations } = usePage().props as any as PageProps;
+export default function Stations({stations}:{stations:Station[]}) {
+    const { t } = useImport()
     const { company } = useComapny();
     const [createOpen, setCreateOpen] = useState(false);
 
@@ -38,7 +20,7 @@ export default function Stations() {
         <DashboardLayout>
             <Head title={`${t('stations.title')} — AquaRO`} />
 
-            <div className="space-y-6 p-6">
+            <div className="space-y-6 ">
             
                 <PageHeader
                     icon={<MapPin className="h-5 w-5 text-white" />}
