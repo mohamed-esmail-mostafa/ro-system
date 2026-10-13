@@ -4,31 +4,26 @@ import { createInertiaApp } from '@inertiajs/react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
-import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import './i18n/index'
 import toast, { Toaster } from 'react-hot-toast';
-import PWA from './components/shared/PWA';
-import InstallPWA from './components/shared/InstallPWA';
 import '@/hooks/use-pwa-install';
-import { registerSW } from 'virtual:pwa-register';
-
-
 const appName = import.meta.env.VITE_APP_NAME || 'NAQAA';
 
+// Register NAQAA PWA Service Worker
+if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register('/sw.js', { scope: '/' })
+            .then((registration) => {
+                console.log('NAQAA PWA Service Worker registered, scope:', registration.scope);
+            })
+            .catch((err) => {
+                console.warn('NAQAA PWA Service Worker registration:', err);
+            });
+    });
+}
 
-
-registerSW({
-    immediate: true,
-
-    onOfflineReady() {
-        console.log('PWA is ready to work offline');
-    },
-
-    onNeedRefresh() {
-        console.log('A new version of the app is available.');
-    },
-});
 
 
 createInertiaApp({
@@ -52,8 +47,6 @@ createInertiaApp({
             <TooltipProvider delayDuration={0}>
                 {app}
                 <Toaster />
-                <PWA />
-                <InstallPWA />
             </TooltipProvider>
         );
     },

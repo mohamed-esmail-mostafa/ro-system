@@ -1,7 +1,6 @@
 import React from 'react'
 import { DashboardLayout } from '../dashboard/components/DashboardLayout'
 import PageTitle from '@/components/shared/page-header'
-import InstallPWA from '@/components/shared/InstallPWA'
 import ComingSoon from '@/components/shared/coming-soon'
 
 export default function operators({ operators }: any) {

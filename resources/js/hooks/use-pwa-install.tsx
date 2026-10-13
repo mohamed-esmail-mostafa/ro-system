@@ -31,25 +31,26 @@ function checkIsStandalone(): boolean {
     const isMatchMediaMinimalUi = window.matchMedia('(display-mode: minimal-ui)').matches;
     const isNavigatorStandalone = (window.navigator as any).standalone === true;
     const isAndroidApp = typeof document !== 'undefined' && document.referrer.startsWith('android-app://');
-    let hasLocalFlag = false;
-    try {
-        hasLocalFlag = localStorage.getItem('pwa_installed') === 'true';
-    } catch {
-        // ignore
-    }
 
     return (
         isMatchMediaStandalone ||
         isMatchMediaFullscreen ||
         isMatchMediaMinimalUi ||
         isNavigatorStandalone ||
-        isAndroidApp ||
-        hasLocalFlag
+        isAndroidApp
     );
 }
 
-// Initialize listeners globally immediately upon script load
+// Clean up stale localStorage flag if not actually running in standalone mode
 if (typeof window !== 'undefined') {
+    if (!checkIsStandalone()) {
+        try {
+            localStorage.removeItem('pwa_installed');
+        } catch {
+            // ignore
+        }
+    }
+
     cachedIsInstalled = checkIsStandalone();
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -60,14 +61,9 @@ if (typeof window !== 'undefined') {
     });
 
     window.addEventListener('appinstalled', () => {
-        cachedIsInstalled = true;
+        cachedIsInstalled = checkIsStandalone();
         cachedInstallPrompt = null;
         (window as any).__pwaInstallPrompt = null;
-        try {
-            localStorage.setItem('pwa_installed', 'true');
-        } catch {
-            // ignore
-        }
         notifySubscribers();
     });
 }
@@ -115,10 +111,6 @@ export function usePwaInstall() {
     }, []);
 
     const triggerInstall = useCallback(async (): Promise<'accepted' | 'dismissed' | 'ios-guide' | 'desktop-guide' | 'already-installed'> => {
-        if (isInstalled) {
-            return 'already-installed';
-        }
-
         if (installPrompt) {
             try {
                 setIsInstalling(true);
@@ -126,18 +118,10 @@ export function usePwaInstall() {
                 const choice = await installPrompt.userChoice;
 
                 if (choice.outcome === 'accepted') {
-                    setIsInstalled(true);
-                    cachedIsInstalled = true;
-                    try {
-                        localStorage.setItem('pwa_installed', 'true');
-                    } catch {
-                        // ignore
-                    }
+                    cachedInstallPrompt = null;
+                    setInstallPrompt(null);
+                    (window as any).__pwaInstallPrompt = null;
                 }
-
-                cachedInstallPrompt = null;
-                setInstallPrompt(null);
-                (window as any).__pwaInstallPrompt = null;
                 return choice.outcome;
             } catch (err) {
                 console.error('Failed to trigger PWA prompt:', err);
@@ -147,12 +131,16 @@ export function usePwaInstall() {
             }
         }
 
+        if (checkIsStandalone()) {
+            return 'already-installed';
+        }
+
         if (platform.isIos) {
             return 'ios-guide';
         }
 
         return 'desktop-guide';
-    }, [installPrompt, isInstalled, platform.isIos]);
+    }, [installPrompt, platform.isIos]);
 
     return {
         installPrompt,

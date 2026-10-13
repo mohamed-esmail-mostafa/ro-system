@@ -4,6 +4,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'index')->name('home');
 
+Route::get('/manifest.webmanifest', function () {
+    $path = public_path('manifest.webmanifest');
+    if (!file_exists($path)) {
+        $path = public_path('build/manifest.webmanifest');
+    }
+    return response()->file($path, [
+        'Content-Type' => 'application/manifest+json',
+    ]);
+});
+
+Route::get('/sw.js', function () {
+    $path = public_path('sw.js');
+    if (!file_exists($path)) {
+        $path = public_path('build/sw.js');
+    }
+    return response()->file($path, [
+        'Content-Type' => 'application/javascript',
+        'Service-Worker-Allowed' => '/',
+    ]);
+});
+
 // Route::middleware(['auth', 'verified'])->group(function () {
 //     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 // });

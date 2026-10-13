@@ -26,20 +26,27 @@ export default defineConfig({
         }),
          VitePWA({
             registerType: 'autoUpdate',
-
+            scope: '/',
+            base: '/',
+            buildBase: '/build/',
+            devOptions: {
+                enabled: true,
+                type: 'module',
+            },
             manifest: {
                 id: '/',
 
-                name: ' NAQAA ',
+                name: 'NAQAA',
                 short_name: 'NAQAA',
-                description: 'نظام إدارة RO',
+                description: 'نظام إدارة محطات RO - نقاء',
 
                 start_url: '/',
                 scope: '/',
 
                 display: 'standalone',
+                orientation: 'portrait-primary',
 
-                theme_color: '#ffffff',
+                theme_color: '#0891b2',
                 background_color: '#ffffff',
 
                 icons: [
@@ -66,6 +73,7 @@ export default defineConfig({
 
             workbox: {
                 cleanupOutdatedCaches: true,
+                navigateFallback: null,
             },
         }),
         tailwindcss(),

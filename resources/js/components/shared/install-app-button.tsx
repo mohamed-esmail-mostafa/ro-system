@@ -79,13 +79,13 @@ export default function InstallAppButton({
                         </div>
                         <div>
                             <h3 className="text-base font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2 justify-center sm:justify-start">
-                                {t('pwa.installed', 'التطبيق مثبت على هذا الجهاز')}
+                                {t('pwa.installed', 'تطبيق نقاء مثبت على هذا الجهاز')}
                                 <Badge variant="secondary" className="bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-semibold border-emerald-200">
                                     PWA
                                 </Badge>
                             </h3>
                             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                {t('pwa.installed_desc', 'أنت تستخدم عيادتي بالفعل من خلال التطبيق المثبت.')}
+                                {t('pwa.installed_desc', 'أنت تستخدم تطبيق نقاء بالفعل من خلال التطبيق المثبت.')}
                             </p>
                         </div>
                     </div>
@@ -223,19 +223,19 @@ export default function InstallAppButton({
                             {guideType === 'ios' ? (
                                 <>
                                     <Smartphone className="size-5 text-primary" />
-                                    <span>{t('pwa.ios_guide_title', 'تثبيت التطبيق على iPhone و iPad')}</span>
+                                    <span>{t('pwa.ios_guide_title', 'تثبيت تطبيق نقاء على iPhone و iPad')}</span>
                                 </>
                             ) : (
                                 <>
                                     <MonitorDown className="size-5 text-primary" />
-                                    <span>{t('pwa.desktop_guide_title', 'تثبيت عيادتي على الحاسوب')}</span>
+                                    <span>{t('pwa.desktop_guide_title', 'تثبيت تطبيق نقاء على الحاسوب')}</span>
                                 </>
                             )}
                         </DialogTitle>
                         <DialogDescription className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                             {guideType === 'ios'
                                 ? t('pwa.ios_guide_desc', 'يدعم متصفح Safari على أجهزة Apple التثبيت بسهولة عبر الخطوات التالية:')
-                                : t('pwa.desktop_guide_desc', 'يمكنك تثبيت عيادتي كتطبيق لسطح المكتب في متصفح Chrome أو Edge:')}
+                                : t('pwa.desktop_guide_desc', 'يمكنك تثبيت تطبيق نقاء كتطبيق لسطح المكتب في متصفح Chrome أو Edge:')}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -305,7 +305,7 @@ export default function InstallAppButton({
                                 </div>
                                 <div className="space-y-0.5">
                                     <p className="font-semibold text-gray-900 dark:text-gray-100">
-                                        {t('pwa.desktop_step_2', "أو من قائمة المتصفح (⋮) اختر 'تثبيت عيادتي' (Install Eyadati).")}
+                                        {t('pwa.desktop_step_2', "أو من قائمة المتصفح (⋮) اختر 'تثبيت تطبيق نقاء' (Install NAQAA).")}
                                     </p>
                                 </div>
                             </div>

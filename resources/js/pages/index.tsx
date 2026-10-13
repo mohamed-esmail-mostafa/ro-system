@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next';
+
 
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
@@ -17,11 +17,13 @@ import CTASection from '@/components/landing/CTASection';
 import Footer from '@/components/landing/Footer';
 import useImport from '@/hooks/use-import';
 import useComapny from '@/hooks/use-comapny';
+import { usePwaInstall } from '@/hooks/use-pwa-install';
 import InstallAppButton from '@/components/shared/install-app-button';
 
 export default function LandingPage() {
     const { t } = useImport();
     const { company } = useComapny();
+    const { isInstalled } = usePwaInstall();
 
 
     return (
@@ -44,11 +46,16 @@ export default function LandingPage() {
                     <FAQSection />
                     <CTASection />
                 </main>
-                <div className='fixed bottom-0 right-0 left-0 z-50 bg-white'>
-                    <InstallAppButton variant="button" />
-                </div>
+                {!isInstalled && (
+                    <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 shadow-lg px-3 py-1.5 sm:px-6">
+                        <div className="max-w-3xl mx-auto">
+                            <InstallAppButton variant="button" />
+                        </div>
+                    </div>
+                )}
                 <Footer />
             </div>
         </>
     );
 }
+
