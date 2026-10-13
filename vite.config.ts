@@ -24,49 +24,39 @@ export default defineConfig({
                 plugins: ['babel-plugin-react-compiler'],
             },
         }),
-        VitePWA({
+         VitePWA({
             registerType: 'autoUpdate',
 
-            injectRegister: 'auto',
-
-            includeAssets: [
-                'favicon.ico',
-                'favicon.svg',
-                'app-icon.png',
-                'apple-touch-icon.png',
-                'pwa-192x192.png',
-                'pwa-512x512.png',
-            ],
-
             manifest: {
-                name: 'RO System - Water Treatment Management',
-                short_name: 'RO System',
-                description: 'RO Water Treatment Plant SaaS Management System',
+                id: '/',
+
+                name: ' NAQAA ',
+                short_name: 'NAQAA',
+                description: 'نظام إدارة RO',
 
                 start_url: '/',
                 scope: '/',
 
-                theme_color: '#0891b2',
-                background_color: '#ffffff',
-
                 display: 'standalone',
-                orientation: 'portrait',
+
+                theme_color: '#ffffff',
+                background_color: '#ffffff',
 
                 icons: [
                     {
-                        src: '/pwa-192x192.png',
+                        src: '/icons/icon-192.png',
                         sizes: '192x192',
                         type: 'image/png',
                         purpose: 'any',
                     },
                     {
-                        src: '/pwa-512x512.png',
+                        src: '/icons/icon-512.png',
                         sizes: '512x512',
                         type: 'image/png',
                         purpose: 'any',
                     },
                     {
-                        src: '/pwa-512x512.png',
+                        src: '/icons/icon-512-maskable.png',
                         sizes: '512x512',
                         type: 'image/png',
                         purpose: 'maskable',
@@ -74,15 +64,8 @@ export default defineConfig({
                 ],
             },
 
-            devOptions: {
-                enabled: true,
-                type: 'classic',
-            },
-
             workbox: {
-                globPatterns: [
-                    '**/*.{js,css,html,ico,png,svg,woff2}',
-                ],
+                cleanupOutdatedCaches: true,
             },
         }),
         tailwindcss(),

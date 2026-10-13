@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-pwa/client" />
 import { createInertiaApp } from '@inertiajs/react';
 // import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -9,8 +10,26 @@ import './i18n/index'
 import toast, { Toaster } from 'react-hot-toast';
 import PWA from './components/shared/PWA';
 import InstallPWA from './components/shared/InstallPWA';
+import '@/hooks/use-pwa-install';
+import { registerSW } from 'virtual:pwa-register';
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'NAQAA';
+
+
+
+registerSW({
+    immediate: true,
+
+    onOfflineReady() {
+        console.log('PWA is ready to work offline');
+    },
+
+    onNeedRefresh() {
+        console.log('A new version of the app is available.');
+    },
+});
+
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),

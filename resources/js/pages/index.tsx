@@ -17,17 +17,18 @@ import CTASection from '@/components/landing/CTASection';
 import Footer from '@/components/landing/Footer';
 import useImport from '@/hooks/use-import';
 import useComapny from '@/hooks/use-comapny';
+import InstallAppButton from '@/components/shared/install-app-button';
 
 export default function LandingPage() {
     const { t } = useImport();
-    const {company}=useComapny();
-    
+    const { company } = useComapny();
+
 
     return (
         <>
             <Head title={t('landing.meta.title')} />
 
-            <div className="min-h-screen bg-white dark:bg-slate-950 antialiased">
+            <div className="min-h-screen bg-white dark:bg-slate-950 antialiased overflow-hidden">
                 <Navbar />
 
                 <main>
@@ -43,7 +44,9 @@ export default function LandingPage() {
                     <FAQSection />
                     <CTASection />
                 </main>
-
+                <div className='fixed bottom-0 right-0 left-0 z-50 bg-white'>
+                    <InstallAppButton variant="button" />
+                </div>
                 <Footer />
             </div>
         </>
