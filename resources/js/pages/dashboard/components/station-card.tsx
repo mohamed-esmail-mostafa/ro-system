@@ -75,12 +75,12 @@ export default function StationCard({ station }: { station: Station }) {
                                 </div>
 
                                 <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-700 shadow dark:bg-gray-900 dark:text-gray-300">
-                                    {unit.capacity} L/H
+                                    {unit.capacity} 
                                 </span>
                             </div>
 
                             {/* Actions */}
-                            <div className="mt-5 grid grid-cols-3 gap-2">
+                            <div className="mt-5 grid grid-cols-1 gap-2">
                                 <Link
                                     href={`/ro-units/unit-details/${unit.id}`}
                                     className="rounded-lg border border-gray-300 px-3 py-2 text-center text-sm font-medium text-gray-700 transition hover:border-blue-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-300"

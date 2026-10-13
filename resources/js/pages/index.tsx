@@ -1,7 +1,5 @@
 import React from 'react';
 import { Head } from '@inertiajs/react';
-
-
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
 import TrustedSection from '@/components/landing/TrustedSection';

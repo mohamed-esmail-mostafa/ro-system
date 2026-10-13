@@ -1,29 +1,22 @@
 import React from "react";
 import { Head, Link } from "@inertiajs/react";
 import {
-  Building2,
-  Droplets,
-  ArrowRight,
-  MapPin,
   Database,
 } from "lucide-react";
 
-import { DashboardLayout } from "./components/DashboardLayout";
+// import { DashboardLayout } from "./components/DashboardLayout";
 import useImport from "@/hooks/use-import";
 import PageTitle from "@/components/shared/page-header";
 import StationCard from "./components/station-card";
+import DashboardLayout from "@/layouts/dashboard-layout";
 
-export default function Dashboard({
-  stations,
-}: {
-  stations: Array<any>;
-}) {
+export default function Dashboard({ stations }: { stations: Array<any>; }) {
   const { t } = useImport()
   return (
     <DashboardLayout>
       <Head title="Dashboard — AquaRO" />
 
-      <div className="space-y-8 container mx-auto px-5 py-10">
+      <div className="container mx-auto ">
 
         <PageTitle
           icon={<Database />}

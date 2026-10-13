@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
 import useImport from '@/hooks/use-import';
-import BottomNavigation from './bottom-navigation';
+import BottomNavigation from '@/layouts/dashboard/bottom-navigation';
 
 interface DashboardLayoutProps {
     children: React.ReactNode;

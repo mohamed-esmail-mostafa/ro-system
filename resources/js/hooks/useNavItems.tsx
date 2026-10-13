@@ -17,7 +17,6 @@ export default function useNavItems() {
     const { t } = useImport();
     const { auth } = usePage().props as any;
     const role = auth?.user?.role?.slug;
-    const {company}=useComapny();
     const canAccess = (item: SidebarNavItem) => {
 
         if (!item.roles)
@@ -29,7 +28,7 @@ export default function useNavItems() {
     };
 
 
- 
+
     const navItems: SidebarNavItem[] = [
 
         {
@@ -44,7 +43,7 @@ export default function useNavItems() {
             key: 'stations',
             label: t("stations.title"),
             icon: MapPin,
-            roles: ['admin' ,'operator','company-admin','chemical','supervisior'],
+            roles: ['admin', 'operator', 'company-admin', 'chemical', 'supervisior'],
             children: [
                 {
                     key: 'stations-list',
@@ -58,7 +57,7 @@ export default function useNavItems() {
                     href: '/stations/operators',
                     icon: MapPin,
                 }
-                
+
             ]
         },
 
@@ -67,7 +66,7 @@ export default function useNavItems() {
             key: 'ro',
             label: t("ro-units.title"),
             icon: Droplets,
-            roles: ['company-admin','operator','chemical','supervisior'],
+            roles: ['company-admin', 'operator', 'chemical', 'supervisior'],
             children: [
 
                 {
@@ -75,7 +74,7 @@ export default function useNavItems() {
                     label: t("ro-units.title"),
                     href: '/ro-units',
                     icon: Droplets,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
 
 
@@ -84,7 +83,7 @@ export default function useNavItems() {
                     label: t("ro-units.ro-settings"),
                     href: '/ro-units/settings',
                     icon: Settings2Icon,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 }
 
             ]
@@ -96,15 +95,15 @@ export default function useNavItems() {
             label: t("readings.title"),
             href: '/readings',
             icon: BarChart3,
-            roles: ['company-admin','operator','chemical','supervisior'],
-             children: [
+            roles: ['company-admin', 'operator', 'chemical', 'supervisior'],
+            children: [
 
                 {
                     key: 'add-new-readings',
                     label: t("readings.create.title"),
                     href: '/readings',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
 
             ]
@@ -114,22 +113,22 @@ export default function useNavItems() {
             label: t("activities.title"),
             href: '/activities/',
             icon: BarChart3,
-            roles: ['company-admin','operator','chemical','supervisior'],
-             children: [
+            roles: ['company-admin', 'operator', 'chemical', 'supervisior'],
+            children: [
 
                 {
                     key: 'add-new-activity',
                     label: t("activities.create"),
                     href: '/activities/create/page',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
                 {
                     key: 'show-activities',
                     label: t("activities.show-activities"),
                     href: '/activities',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
 
             ]
@@ -141,36 +140,36 @@ export default function useNavItems() {
             label: t("reports.title"),
             href: '/reports',
             icon: FileBarChart,
-            roles: ['company-admin','operator','chemical','supervisior']
+            roles: ['company-admin', 'operator', 'chemical', 'supervisior']
         },
         {
             key: 'inventory',
             label: t("inventory.title"),
             href: '/inventories',
             icon: FileBarChart,
-            roles: ['company-admin','operator','chemical','supervisior'],
-              children: [
+            roles: ['company-admin', 'operator', 'chemical', 'supervisior'],
+            children: [
 
                 {
                     key: 'show-inventories',
                     label: t("inventory.show-inventories"),
                     href: '/inventories',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
                 {
                     key: 'mif',
                     label: t("inventory.mif"),
                     href: '/mif',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
                 {
                     key: 'mrf',
                     label: t("inventory.mrf"),
                     href: '/mrf',
                     icon: Plus,
-                    roles: ['company-admin','operator','chemical','supervisior']
+                    roles: ['company-admin', 'operator', 'chemical', 'supervisior']
                 },
 
             ]
@@ -183,7 +182,7 @@ export default function useNavItems() {
             href: '/users',
             icon: Users,
             roles: [
-               'company-admin',
+                'company-admin',
             ]
         },
 
