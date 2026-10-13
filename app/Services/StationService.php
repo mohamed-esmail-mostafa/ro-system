@@ -6,6 +6,7 @@ use App\Http\Requests\StoreStationRequest;
 use App\Http\Requests\UpdateStationRequest;
 use App\Models\Company;
 use App\Models\Station;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -14,25 +15,30 @@ class StationService
 {
 
 
-    public function getCompanyStations(){
-         $stations = Station::where('company_id', auth()->user()?->company_id ?? 1)
+    public function getCompanyStations()
+    {
+        $stations = Station::where('company_id', Auth::user()->company_id)
+            ->with('roUnits')
             ->withCount('roUnits')
             ->orderBy('created_at', 'desc')
             ->get();
-
-        return $stations;    
-    }
-
-
-    public function getAuthStations(){
-        $stations = Auth::user()->stations()->with('roUnits.readingCategories.parameters')->get();
         return $stations;
     }
 
-    public function getAuthStationsWithInventory(){
+
+    public function getAuthStations()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $stations = $user->stations()->with('roUnits.readingCategories.parameters')->get();
+        return $stations;
+    }
+
+    public function getAuthStationsWithInventory()
+    {
         return Auth::user()->stations()->with(['inventory.items', 'roUnits'])->get();
     }
-    
+
     public function StoreStation(StoreStationRequest $request)
     {
         return DB::transaction(function () use ($request) {
@@ -78,7 +84,8 @@ class StationService
 
 
 
-    public function getAuthStationsOperators(){
+    public function getAuthStationsOperators()
+    {
         $operators = Auth::user()->stations()->with('users')->get();
         return $operators;
     }

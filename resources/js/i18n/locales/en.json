@@ -469,7 +469,8 @@
     "stay_tuned": "Stay tuned for updates",
     "back":"Go Back",
     "danger":"Danger",
-    "good":"Good"
+    "good":"Good",
+    "options":"Options"
   },
   "auth": {
     "register": "Register",

@@ -53,13 +53,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
 
     const sidebarWidth = isMobile ? 0 : isCollapsed ? 72 : 256;
-
-
-
-
-
     return (
-        <div className="flex h-screen overflow-y-hidden  bg-gray-100  dark:bg-gray-950">
+        <div className="flex h-screen overflow-y-hidden  bg-gray-50  dark:bg-gray-950">
             <Sidebar
                 isOpen={mobileOpen}
                 isCollapsed={isCollapsed}

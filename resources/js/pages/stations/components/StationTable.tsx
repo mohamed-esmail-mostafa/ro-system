@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { router } from '@inertiajs/react';
+import { router, Link } from '@inertiajs/react';
 import toast from 'react-hot-toast';
-import { Droplets, Edit2, MapPin, Phone, Trash2 } from 'lucide-react';
+import { Droplets, Edit2, MapPin, Phone, Trash2, FileText, MoreVertical, Activity, BarChart3, Gauge } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ConfirmDeleteDialog } from '@/components/shared/ConfirmDeleteDialog';
 import { StationFormDialog } from './StationFormDialog';
 import { Station } from '@/types/ro';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 
 
-export function StationTable({ stations }: {stations: Station[]}) {
+
+export function StationTable({ stations }: { stations: Station[] }) {
+
     const { t } = useTranslation();
     const [editStation, setEditStation] = useState<Station | null>(null);
     const [deleteStation, setDeleteStation] = useState<Station | null>(null);
@@ -41,7 +51,7 @@ export function StationTable({ stations }: {stations: Station[]}) {
 
     return (
         <>
-          
+
             {stations.length > 0 ? (
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {stations.map((station) => (
@@ -86,7 +96,7 @@ export function StationTable({ stations }: {stations: Station[]}) {
                             <div className="my-4 border-t border-gray-100 dark:border-gray-800" />
 
                             {/* Information */}
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 {/* Phone */}
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
@@ -114,6 +124,124 @@ export function StationTable({ stations }: {stations: Station[]}) {
                                         {station.ro_units_count ?? 0}
                                     </span>
                                 </div>
+                            </div>
+
+
+                            {/* RO Units */}
+                            <div className="space-y-4 my-3">
+
+
+                                {/* RO Units List */}
+                                {station.ro_units && station.ro_units.length > 0 && (
+                                    <div className="space-y-4">
+                                        {station.ro_units.map((unit) => (
+                                            <div
+                                                key={unit.id}
+                                                className="flex items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50/70 p-3 dark:border-gray-700 dark:bg-gray-800/40"
+                                            >
+                                                {/* Unit Information */}
+                                                <div className="flex min-w-0 items-center gap-2">
+                                                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30">
+                                                        <Droplets className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                                                    </div>
+
+                                                    <div className="min-w-0">
+                                                        <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">
+                                                            {unit.name}
+                                                        </p>
+
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                            {unit.code}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Unit Status */}
+                                                <div className="flex shrink-0 items-center gap-2">
+                                                    <Badge
+                                                        variant="default"
+                                                        className={
+                                                            unit.is_active
+                                                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                                                                : 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                                                        }
+                                                    >
+                                                        {unit.is_active
+                                                            ? t('common.active')
+                                                            : t('common.inactive')}
+                                                    </Badge>
+
+                                                    {/* Actions Dropdown */}
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button
+                                                                type="button"
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 shrink-0"
+                                                                aria-label={`Actions for ${unit.name}`}
+                                                            >
+                                                                <MoreVertical className="h-4 w-4" />
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+
+                                                        <DropdownMenuContent
+                                                            align="end"
+                                                            side="bottom"
+                                                            className="w-48"
+                                                        >
+                                                            <DropdownMenuLabel>
+                                                                {unit.name}
+                                                            </DropdownMenuLabel>
+
+                                                            <DropdownMenuSeparator />
+
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    href={`/ro-units/unit-details/${unit.id}`}
+                                                                    className="flex w-full cursor-pointer items-center"
+                                                                >
+                                                                    <FileText className="mr-2 h-4 w-4" />
+                                                                    {t('reports.details')}
+                                                                </Link>
+                                                            </DropdownMenuItem>
+
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    href={`/readings/ro-unit/${unit.id}`}
+                                                                    className="flex w-full cursor-pointer items-center"
+                                                                >
+                                                                    <Activity className="mr-2 h-4 w-4" />
+                                                                    {t('reports.readings')}
+                                                                </Link>
+                                                            </DropdownMenuItem>
+
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    href={`/reports/ro-unit/${unit.id}`}
+                                                                    className="flex w-full cursor-pointer items-center"
+                                                                >
+                                                                    <BarChart3 className="mr-2 h-4 w-4" />
+                                                                    {t('reports.dailyReports')}
+                                                                </Link>
+                                                            </DropdownMenuItem>
+
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    href={`/kpi/ro-unit/${unit.id}`}
+                                                                    className="flex w-full cursor-pointer items-center"
+                                                                >
+                                                                    <Gauge className="mr-2 h-4 w-4" />
+                                                                    {t('kpi.title')}
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Actions */}
