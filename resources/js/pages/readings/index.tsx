@@ -1,9 +1,10 @@
-import { DashboardLayout } from '../dashboard/components/DashboardLayout'
+// import { DashboardLayout } from '../dashboard/components/DashboardLayout'
 import useImport from '@/hooks/use-import'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RoUnitReadingForm } from './components/RoUnitReadingForm'
 import NoStations from './components/no-stations'
 import ReadingHeader from './components/reading-header'
+import DashboardLayout from '@/layouts/dashboard-layout'
 
 export default function RoReadings({ stations }: any) {
   const { t } = useImport();
@@ -11,7 +12,7 @@ export default function RoReadings({ stations }: any) {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto p-4 sm:p-6 lg:p-10">
+      <div className="container mx-auto ">
         <ReadingHeader />
 
         {stations && stations.length > 0 ? (
@@ -29,7 +30,7 @@ export default function RoReadings({ stations }: any) {
             </TabsList>
 
             {stations.map((station: any) => (
-              <TabsContent key={station.id} value={station.id.toString()} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 mt-0 focus-visible:outline-none focus-visible:ring-0">
+              <TabsContent key={station.id} value={station.id.toString()} className="space-y-80 animate-in fade-in slide-in-from-bottom-4 duration-500 mt-0 focus-visible:outline-none focus-visible:ring-0">
                 {station.ro_units && station.ro_units.length > 0 ? (
                   station.ro_units.map((unit: any) => (
                     <RoUnitReadingForm key={unit.id} unit={unit} t={t} />

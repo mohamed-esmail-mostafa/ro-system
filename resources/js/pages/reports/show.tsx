@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
-import { DashboardLayout } from '../dashboard/components/DashboardLayout';
 import useImport from '@/hooks/use-import';
 import NoReports from './components/no-reports';
 import DateFilterReports from './components/date-filter-reports';
@@ -8,6 +7,7 @@ import ReportsHero from './components/reports-hero';
 import ReportCard from './components/report-card';
 import { PaginatedReports, Report, RoUnit } from '@/types/ro';
 import ReportsPagination from './components/reports-pagination';
+import DashboardLayout from '@/layouts/dashboard-layout';
 
 
 
@@ -54,7 +54,7 @@ export default function ShowReports({ roUnit, reports, filters }: ShowReportsPro
         <DashboardLayout>
             <Head title={`${roUnit.name} — ${t('reports.showTitle')}`} />
 
-            <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+            <div className="space-y-6 ">
                 <ReportsHero
                     roUnit={roUnit}
                     total={total} />

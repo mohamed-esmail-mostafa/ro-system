@@ -14,6 +14,16 @@ use Illuminate\Support\Str;
 class StationService
 {
 
+private function getAuthenticatedUser(): User
+{
+    $user = Auth::user();
+
+    if (!$user instanceof User) {
+        abort(401);
+    }
+
+    return $user;
+}
 
     public function getCompanyStations()
     {
@@ -28,15 +38,15 @@ class StationService
 
     public function getAuthStations()
     {
-        /** @var User $user */
-        $user = Auth::user();
+        $user = $this->getAuthenticatedUser();
         $stations = $user->stations()->with('roUnits.readingCategories.parameters')->get();
         return $stations;
     }
 
     public function getAuthStationsWithInventory()
     {
-        return Auth::user()->stations()->with(['inventory.items', 'roUnits'])->get();
+         $user = $this->getAuthenticatedUser();
+        return $user->stations()->with(['inventory.items', 'roUnits'])->get();
     }
 
     public function StoreStation(StoreStationRequest $request)
@@ -80,13 +90,16 @@ class StationService
     public function destroyStation(Station $station): void
     {
         $station->delete();
+     
     }
 
 
 
     public function getAuthStationsOperators()
     {
-        $operators = Auth::user()->stations()->with('users')->get();
+
+        $user = $this->getAuthenticatedUser();
+        $operators = $user->stations()->with('users')->get();
         return $operators;
     }
 

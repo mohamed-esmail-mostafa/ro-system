@@ -5,12 +5,13 @@ import {
     FileText,
 } from "lucide-react";
 
-import { DashboardLayout } from "../dashboard/components/DashboardLayout";
+// import { DashboardLayout } from "../dashboard/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import useImport from "@/hooks/use-import";
 import SessionCard from "./components/session-card";
 import DateFilterBar from "./components/date-filter-bar";
 import Pagination from "./components/pagination";
+import DashboardLayout from "@/layouts/dashboard-layout";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -84,7 +85,7 @@ export default function RoUnitReadings({ roUnit, sessions, filters }: Props) {
         <DashboardLayout>
             <Head title={`${roUnit.name} — ${t("readings.title")}`} />
 
-            <div className="space-y-6 p-6">
+            <div className="space-y-6">
                 {/* ── Page Header ─────────────────────────────────────── */}
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
