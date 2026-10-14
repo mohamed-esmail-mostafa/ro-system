@@ -62,107 +62,127 @@ export function RoUnitTable({ roUnits, stations }: RoUnitTableProps) {
 
     return (
         <>
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-                    <thead>
-                        <tr className="bg-gray-50 dark:bg-gray-800/50">
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.name')}
-                            </th>
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.code')}
-                            </th>
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.station')}
-                            </th>
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.capacity')}
-                            </th>
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.manufacturer')}
-                            </th>
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.serialNumber')}
-                            </th>
-                            <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.status')}
-                            </th>
-                            <th className="px-6 py-3 text-end text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                {t('ro-units.table.actions')}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                        {roUnits.map((unit) => (
-                            <tr
-                                key={unit.id}
-                                className="transition-colors hover:bg-gray-50/60 dark:hover:bg-gray-800/40"
-                            >
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-900/30">
-                                            <Droplets className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-                                        </div>
-                                        <span className="text-sm font-medium text-gray-900 dark:text-white">
-                                            {unit.name}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="rounded-md bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+
+
+
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {roUnits.map((unit) => (
+                    <div
+                        key={unit.id}
+                        className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-cyan-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-900 dark:hover:border-cyan-800"
+                    >
+                        {/* Header */}
+                        <div className="flex items-start justify-between gap-3 border-b border-gray-100 p-4 dark:border-gray-800">
+                            <div className="flex min-w-0 items-center gap-3">
+                                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 ring-1 ring-cyan-100 dark:bg-cyan-950/40 dark:ring-cyan-900">
+                                    <Droplets className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
+                                </div>
+
+                                <div className="min-w-0">
+                                    <h3 className="truncate text-sm font-semibold text-gray-900 dark:text-white">
+                                        {unit.name}
+                                    </h3>
+
+                                    <span className="mt-1 inline-flex rounded-md bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
                                         {unit.code ?? '—'}
                                     </span>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                                </div>
+                            </div>
+
+                            <Badge
+                                className={
+                                    unit.is_active
+                                        ? 'shrink-0 border-0 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                                        : 'shrink-0 border-0 bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                                }
+                            >
+                                {unit.is_active
+                                    ? t('common.active')
+                                    : t('common.inactive')}
+                            </Badge>
+                        </div>
+
+                        {/* Capacity Highlight */}
+                        <div className="border-b border-gray-100 bg-gray-50/70 px-4 py-3 dark:border-gray-800 dark:bg-gray-800/20">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                {t('ro-units.table.capacity')}
+                            </p>
+
+                            <div className="mt-1 flex items-baseline gap-2">
+                                <span className="text-2xl font-semibold tracking-tight text-cyan-700 dark:text-cyan-400">
+                                    {unit.capacity ?? '—'}
+                                </span>
+
+                                {unit.capacity != null && (
+                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                                        m³/h
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Details */}
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-5 p-4">
+                            <div className="min-w-0">
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    {t('ro-units.table.station')}
+                                </p>
+                                <p className="mt-1 truncate text-sm font-medium text-gray-800 dark:text-gray-200">
                                     {unit.station?.name ?? '—'}
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                                    {unit.capacity != null ? `${unit.capacity} m³/h` : '—'}
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                                </p>
+                            </div>
+
+                            <div className="min-w-0">
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    {t('ro-units.table.manufacturer')}
+                                </p>
+                                <p className="mt-1 truncate text-sm font-medium text-gray-800 dark:text-gray-200">
                                     {unit.manufacturer ?? '—'}
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                                </p>
+                            </div>
+
+                            <div className="col-span-2 min-w-0">
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    {t('ro-units.table.serialNumber')}
+                                </p>
+                                <p className="mt-1 truncate font-mono text-sm text-gray-700 dark:text-gray-300">
                                     {unit.serial_number ?? '—'}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <Badge
-                                        className={
-                                            unit.is_active
-                                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                                                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-                                        }
-                                    >
-                                        {unit.is_active ? t('common.active') : t('common.inactive')}
-                                    </Badge>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center justify-end gap-2">
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            className="h-8 w-8 p-0 text-gray-500 hover:text-blue-600"
-                                            onClick={() => setEditUnit(unit)}
-                                            title={t('common.edit')}
-                                        >
-                                            <Edit2 className="h-4 w-4" />
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            className="h-8 w-8 p-0 text-gray-500 hover:text-red-600"
-                                            onClick={() => setDeleteUnit(unit)}
-                                            title={t('common.delete')}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center justify-end gap-2 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 w-8 p-0 text-gray-500 transition-colors hover:bg-cyan-50 hover:text-cyan-700 dark:hover:bg-cyan-950/40 dark:hover:text-cyan-400"
+                                onClick={() => setEditUnit(unit)}
+                                title={t('common.edit')}
+                                aria-label={t('common.edit')}
+                            >
+                                <Edit2 className="h-4 w-4" />
+                            </Button>
+
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 w-8 p-0 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 dark:hover:text-red-400"
+                                onClick={() => setDeleteUnit(unit)}
+                                title={t('common.delete')}
+                                aria-label={t('common.delete')}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </div>
+                ))}
             </div>
+
+
+
+
 
             <RoUnitFormDialog
                 open={!!editUnit}

@@ -1,6 +1,6 @@
 
-import { DashboardLayout } from '../dashboard/components/DashboardLayout'
-// import  DashboardLayout  from '@/layouts/dashboard-layout'
+
+import  DashboardLayout  from '@/layouts/dashboard-layout'
 import PageHeader from '@/components/shared/page-header'
 import { Droplets } from 'lucide-react'
 import useImport from '@/hooks/use-import'
@@ -133,20 +133,7 @@ export default function create_ro_unit_page({ stations }: { stations: Station[] 
   });
 
 
-  const formFields = [
-    {
-      sectionTitle: t('ro-units.sections.basicInfo'),
-      fields: [
-        {
-          label: t('ro-units.fields.station'),
-          name: "name",
-          value: "value",
-          onChange: formik.handleChange,
-          placeholder: "placeholder"
-        }
-      ]
-    }
-  ]
+
   return (
     <DashboardLayout>
       <PageHeader

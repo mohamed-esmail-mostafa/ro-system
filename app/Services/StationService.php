@@ -99,8 +99,21 @@ private function getAuthenticatedUser(): User
     {
 
         $user = $this->getAuthenticatedUser();
-        $operators = $user->stations()->with('users')->get();
-        return $operators;
+        // $operators = $user->stations()->with('users.role')->get();
+        // return $operators;
+        return $user->stations()
+        ->with([
+            'users' => function ($query) {
+                $query->whereHas('role', function ($roleQuery) {
+                    $roleQuery->whereIn('slug', [
+                        'chemical',
+                        'operator',
+                        'supervisor',
+                    ]);
+                })->with('role');
+            },
+        ])
+        ->get();
     }
 
     private function generateSlug(string $name): string

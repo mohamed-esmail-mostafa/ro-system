@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Head, usePage, Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { Droplets, Plus } from 'lucide-react';
-import { DashboardLayout } from '../dashboard/components/DashboardLayout';
+import DashboardLayout from '@/layouts/dashboard-layout';
 import { Button } from '@/components/ui/button';
 import { RoUnitTable } from './components/RoUnitTable';
 import { RoUnitFormDialog } from './components/RoUnitFormDialog';
@@ -11,24 +11,7 @@ import PageHeader from '@/components/shared/page-header';
 import { Station ,RoUnit } from '@/types/ro';
 
 
-// interface Station {
-//     id: number;
-//     name: string;
-//     code: string;
-// }
 
-// interface RoUnit {
-//     id: number;
-//     station_id: number;
-//     name: string;
-//     code: string | null;
-//     capacity: number | null;
-//     description: string | null;
-//     serial_number: string | null;
-//     manufacturer: string | null;
-//     is_active: boolean;
-//     station?: { id: number; name: string; code: string };
-// }
 
 interface PageProps {
     ro_units: RoUnit[];
