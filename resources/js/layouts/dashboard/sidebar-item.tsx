@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 import { cn } from "@/lib/utils";
-import { SidebarNavItem } from "../hooks/useNavItems";
+import { SidebarNavItem } from "@/hooks/useNavItems";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SidebarItemProps {
